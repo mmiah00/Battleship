@@ -26,10 +26,12 @@
 ### Technical Design
     Networking - To allow 2 players to play against each other
     Signaling - Block certain commands that aren’t allowed at a certain time like placing in the middle of the
-    match Shared memory/Semaphore - While it is one player’s turn, the other player shouldn’t be able to 
-    nteract with the board.
+    match 
+    Shared memory/Semaphore - While it is one player’s turn, the other player shouldn’t be able to interact 
+    with the board.
     Allocating memory - To record any necessary game data
-    An array for each board to keep track of ships
+    
+    Data Structure: An array for each board to keep track of ships
 
 ### Required Libraries:
 	  apt-get instructions 
