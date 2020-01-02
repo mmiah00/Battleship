@@ -7,13 +7,16 @@
   - Bryan Monge Serrano
 
 ### Description
-    We are creating a terminal based Battleship game. It is a 2 players turn based game with two screens/windows per player. The goal of       the game is to be the first to guess all coordinates of the opposing player’s ships on a xy plane. One screen will display your ship       positions as well as the guesses of your opponent while the other will display your guesses.
+    We are creating a terminal based Battleship game. It is a 2 players turn based game with two screens/windows per player. The goal of
+    the game is to be the first to guess all coordinates of the opposing player’s ships on a xy plane. One screen will display your ship
+    positions as well as the guesses of your opponent while the other will display your guesses.
 
 ### How It Will Be Used
     The game will be terminal based so the user plays the game through the use of commands.
       - Help - display all of the instructions and commands needed to play the game.
       - Exit - exits the game/program
-      - Place x y vertical/horizontal - places a ship either vertical or horizontal starting at the x and y coordinate of the board and         going down/to the right.
+      - Place x y vertical/horizontal - places a ship either vertical or horizontal starting at the x and y coordinate of the board and 
+      going down/to the right.
       - Display mine/theirs - display the current state of the user’s/opponent’s board.
       - Attack x y - attacks the coordinate of the opponent’s board.
 
