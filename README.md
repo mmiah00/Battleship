@@ -24,15 +24,11 @@
       - Attack x y - attacks the coordinate of the opponent’s board.
 
 ### Technical Design
-    Networking - To allow 2 players to play against each other.
-    <br/>
-    Allocating memory - To save any necessary game data.
-    <br/>
-    Working with files - Used to record board status as well as game history.
-    <br/>
+    Networking - To allow 2 players to play against each other.<br/>
+    Allocating memory - To save any necessary game data.<br/>
+    Working with files - Used to record board status as well as game history.<br/>
     Processes - Used to cat/display game history file. At the end, user will be prompted to delete game 
-    history file or keep it for bragging rights by exporting it elsewhere.
-    <br/>
+    history file or keep it for bragging rights by exporting it elsewhere.<br/>
     Data Structure: A struct and array to keep track of remaining ships and the board. 
 
 ### Required Libraries:
