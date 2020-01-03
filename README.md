@@ -31,7 +31,7 @@
     Working with files - Used to record board status as well as game history.
     
     Processes - Used to cat/display game history file. At the end, user will be prompted to delete game 
-    history file or keep it for bragging rights by exporting it elsewhere.\
+    history file or keep it for bragging rights by exporting it elsewhere.
     
     Data Structure: A struct and array to keep track of remaining ships and the board. 
 
