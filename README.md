@@ -28,7 +28,7 @@
     
     Allocating memory - To save any necessary game data.
     
-    Working with files - Used to record board status as well as game history.
+    Working with files - Used to record board status as well as game history by reading/writing to a file.
     
     Processes - Used to cat/display game history file. At the end, user will be prompted to delete game 
     history file or keep it for bragging rights by exporting it elsewhere.
