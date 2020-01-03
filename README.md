@@ -24,14 +24,16 @@
       - Attack x y - attacks the coordinate of the opponent’s board.
 
 ### Technical Design
-    Networking - To allow 2 players to play against each other
-    Signaling - Block certain commands that aren’t allowed at a certain time like placing in the middle of the
-    match 
-    Shared memory/Semaphore - While it is one player’s turn, the other player shouldn’t be able to interact 
-    with the board.
-    Allocating memory - To record any necessary game data
+    Networking - To allow 2 players to play against each other.
     
-    Data Structure: An array for each board to keep track of ships
+    Allocating memory - To save any necessary game data.
+    
+    Working with files - Used to record board status as well as game history.
+    
+    Processes - Used to cat/display game history file. At the end, user will be prompted to delete game 
+    history file or keep it for bragging rights by exporting it elsewhere.
+    
+    Data Structure: A struct and array to keep track of remaining ships and the board. 
 
 ### Required Libraries:
 	  apt-get instructions 
