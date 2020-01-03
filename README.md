@@ -25,7 +25,7 @@
 
 ### Technical Design
     Networking - To allow 2 players to play against each other.
-    
+    <br>
     Allocating memory - To save any necessary game data.
     
     Working with files - Used to record board status as well as game history.
