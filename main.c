@@ -68,5 +68,16 @@ void introscreen () { //thank you patorjk.com for the ASCII art
 
 int main () {
   introscreen ();
+  int running = 1;
+  char command[1000];
+  while (running){
+    printf("Awaiting your next command:");
+    fgets(command, sizeof(command), stdin);
+    command[strlen(command) - 1] = '\0';
+    printf("Your command is %s\n", command);
+    if (strcmp(command, "exit") == 0){
+      running = 0;
+    }
+  }
   return 0;
 }
