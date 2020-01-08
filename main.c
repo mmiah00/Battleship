@@ -65,7 +65,15 @@ void introscreen () { //thank you patorjk.com for the ASCII art
   printf("                     '----------------'  '----------------'  '----------------'  '----------------'      ");
   */
 }
-
+int executeCommand(char * command){
+  if (strcmp(command, "display ally") == 0){
+    printf("Displaying your board and ships");
+  }
+  else if (strcmp(command, "display enemy") == 0){
+    printf("Displaying enemy's board");
+  }
+  return 0;
+}
 int main () {
   introscreen ();
   int running = 1;
@@ -74,9 +82,12 @@ int main () {
     printf("Awaiting your next command:");
     fgets(command, sizeof(command), stdin);
     command[strlen(command) - 1] = '\0';
-    printf("Your command is %s\n", command);
+    printf("Your command is %s\n\n", command);
     if (strcmp(command, "exit") == 0){
       running = 0;
+    }
+    else{
+      executeCommand(command);
     }
   }
   return 0;
