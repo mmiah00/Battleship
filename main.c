@@ -65,18 +65,32 @@ void introscreen () { //thank you patorjk.com for the ASCII art
   printf("                     '----------------'  '----------------'  '----------------'  '----------------'      ");
   */
 }
+
+struct gameBoard{
+  int player; //board of the specified player
+  int board[8][8]; //ships only be visible to the owner of this board. otherwise it will look like an empty spot
+};
+
 int executeCommand(char * command){
-  if (strcmp(command, "display ally") == 0){
-    printf("Displaying your board and ships");
+  if (strcmp(command, "help") == 0){
+    printf("helping\n");
+  }
+  else if (strcmp(command, "history") == 0){
+    printf("Displaying game history:\n");
+  }
+  else if (strcmp(command, "display ally") == 0){
+    printf("Displaying your board and ships\n");
   }
   else if (strcmp(command, "display enemy") == 0){
-    printf("Displaying enemy's board");
+    printf("Displaying enemy's board\n");
   }
   return 0;
 }
+
 int main () {
   introscreen ();
   int running = 1;
+  //int historyFile = open("history.txt", O_CREAT, 0644);
   char command[1000];
   while (running){
     printf("Awaiting your next command:");
