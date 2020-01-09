@@ -71,21 +71,34 @@ struct gameBoard{
   int board[8][8]; //ships only be visible to the owner of this board. otherwise it will look like an empty spot
 };
 
+struct coordinate  {
+  int x,y;
+}
+
 int executeCommand(char * command){
   if (strcmp(command, "help") == 0){
     printf("helping\n");
+    help();
   }
   else if (strcmp(command, "history") == 0){
     printf("Displaying game history:\n");
+    history ();
   }
   else if (strcmp(command, "display ally") == 0){
     printf("Displaying your board and ships\n");
+    ally ();
   }
   else if (strcmp(command, "display enemy") == 0){
     printf("Displaying enemy's board\n");
+    enemy ();
   }
   return 0;
 }
+
+void help () { } //prints manual for how to nagivate program
+void history () { } //prints the history of the moves of the game
+void ally () { } //shows your board
+void enemy () { } //shows enemy's board
 
 int main () {
   introscreen ();
