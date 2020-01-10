@@ -44,8 +44,10 @@ int main(int argc, char **argv) {
     *strchr(buffer, '\n') = 0;
     write(server_socket, buffer, sizeof(buffer));
     read(server_socket, buffer, sizeof(buffer));
+
     struct coordinate c = makecor (buffer);
     addcor (c);
+
     printf("received: [%s]\n", buffer);
   }
 }
