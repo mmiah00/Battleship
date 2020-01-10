@@ -84,34 +84,62 @@ struct coordinate  {
   int x,y;
 };
 
-int executeCommand(char * command){
+int display(int user, struct gameBoard p1Board, struct gameBoard p2Board){
+  if (user == p1Board.player){
+    printf("printing your board\n");
+    for (int r = 0; r < 8; r++){
+      for (int c = 0; c < 8; c++){
+        if (p1Board.board[r][c] == 0){
+          printf("~");
+        }
+      }
+      printf("\n");
+    }
+  }
+  else{
+    printf("printing enemy's board\n");
+  }
+}
+
+int executeCommand(char * command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
   if (strcmp(command, "help") == 0){
-    printf("helping\n");
-    help();
+    printf("Instructions\n");
+    printf("...\n");
   }
   else if (strcmp(command, "history") == 0){
     printf("Displaying game history:\n");
-    history ();
+    //history ();
   }
   else if (strcmp(command, "display ally") == 0){
     printf("Displaying your board and ships\n");
-    ally ();
   }
   else if (strcmp(command, "display enemy") == 0){
     printf("Displaying enemy's board\n");
-    enemy ();
   }
   return 0;
 }
 
-void help () { } //prints manual for how to nagivate program
-void history () { } //prints the history of the moves of the game
-void ally () { } //shows your board
-void enemy () { } //shows enemy's board
 
 int main () {
   introscreen ();
   int running = 1;
+
+  struct gameBoard p1;
+  p1.player = 1;
+  for (int r = 0; r < 8; r++){
+    for (int c = 0; c < 8; c++){
+      p1.board[r][c] = 0;//0 represents water, -1 represents a ship, 1 represents a hit, 2 represents a miss
+    }
+  }
+
+  struct gameBoard p2;
+  p2.player = 2;
+  for (int r = 0; r < 8; r++){
+    for (int c = 0; c < 8; c++){
+      p2.board[r][c] = 0;//0 represents water, -1 represents a ship, 1 represents a hit, 2 represents a miss
+    }
+  }
+
   //int historyFile = open("history.txt", O_CREAT, 0644);
   char command[1000];
   while (running){
@@ -123,7 +151,7 @@ int main () {
       running = 0;
     }
     else{
-      executeCommand(command);
+      executeCommand(command, -1, p1, p2);
     }
   }
   return 0;
