@@ -24,6 +24,15 @@ void introscreen () { //thank you patorjk.com for the ASCII art
   printf ("    ██████╔╝██║  ██║   ██║      ██║   ███████╗███████╗███████║██║  ██║██║██║            \n");
   printf ("    ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝            \n");
 
+  printf("\n\n");
+  printf("                                )___( \n");
+  printf("                          _______/__/_\n");
+  printf("                 ___     /===========|   ___\n");
+  printf("____       __   [\\\\]___/____________|__[///]   __\n");
+  printf("\\   \\_____[\\]__/___________________________\\__[//]___\n");
+  printf(" \40A                                                 |\n");
+  printf("  \\                                                  /\n");
+  printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
   printf ("\n\n");
 
   /*
@@ -73,7 +82,7 @@ struct gameBoard{
 
 struct coordinate  {
   int x,y;
-}
+};
 
 int executeCommand(char * command){
   if (strcmp(command, "help") == 0){
