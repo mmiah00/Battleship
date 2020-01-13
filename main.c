@@ -101,6 +101,77 @@ int display(int user, struct gameBoard p1Board, struct gameBoard p2Board){
   }
 }
 
+int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] ){
+  if (strcmp(HorV, "vertical") == 0){//check vertically
+    for (int r = xcoord; r < 8 && shipSize != 0; r++){
+      if (board[r][ycoord] == 0){//if spot is empty
+        shipSize--;//one coord of ship is valid
+      }
+    }
+    if (shipSize == 0){
+      return 1; //it is valid
+    }
+    else{
+      return 0; //ship is too long to be placed here
+    }
+  }
+  else if (strcmp(HorV, "horizontal") == 0){//check horizontally
+    for (int c = ycoord; c < 8 && shipSize != 0; c++){
+      if (board[xcoord][c] == 0){
+        shipSize--;
+      }
+    }
+    if (shipSize == 0){
+      return 1; //it is valid
+    }
+    else{
+      return 0; //ship is too long to be placed here
+    }
+  }
+  else{
+    return 0;//invalid arg
+  }
+}
+int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]){
+  if (shipType < 1 || shipType > 5 || xcoord > 7 || xcoord < 0 || ycoord > 7 || ycoord < 0){//there are only 5 types of ships
+    return 0;
+  }
+  int shipSize = 0;
+  if (shipType == 1){
+    shipSize = 2;
+  }
+  if (shipType == 2){
+    shipSize = 3;
+  }
+  if (shipType == 3){
+    shipSize = 3;
+  }
+  if (shipType == 4){
+    shipSize = 4;
+  }
+  if (shipType == 5){
+    shipSize = 5;
+  }
+  if (isValid(xcoord, ycoord, shipSize, HorV, board) == 0){//returns 0 if ship can't be placed
+    return 0;//false
+  }
+  else{//ship location is valid
+    if (strcmp(HorV, "vertical") == 0){
+      for (int r = xcoord; shipSize != 0; r++){
+        board[r][ycoord] = 1;
+        shipSize--;
+      }
+    }
+    else if (strcmp(HorV, "horizontal") == 0){
+      for (int c = ycoord; shipSize != 0; c++){
+        board[xcoord][c] = 1;
+        shipSize--;
+      }
+    }
+    return 1;//successfully placed
+  }
+}
+
 int executeCommand(char * command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
   if (strcmp(command, "help") == 0){
     printf("Instructions\n");
@@ -119,6 +190,17 @@ int executeCommand(char * command, int currentPlayer, struct gameBoard p1Board, 
   return 0;
 }
 
+char ** parse_args (char * line) {
+  char ** ans = malloc (256);
+  int i = 0;
+  char * temp;
+  while (temp) {
+    temp = strsep(&line, " ");
+    ans[i] = temp;
+    i ++;
+  }
+  return ans;
+}
 
 int main () {
   introscreen ();
@@ -141,6 +223,48 @@ int main () {
   }
 
   //int historyFile = open("history.txt", O_CREAT, 0644);
+
+  //filling board with ships
+  int ship1placed = 0; //two coords long
+  int ship2placed = 0; //three coords long
+  int ship3placed = 0; //three coords long
+  int ship4placed = 0; //four coords long
+  int ship5placed = 0; //five coords long
+  char input[1000];
+  while (ship1placed != 1 && ship2placed != 1 && ship3placed != 1 && ship4placed != 1 && ship5placed != 1){//only continues to gameplay if all ships are placed
+    printf("Please place your ships to continue\n");
+    fgets(input,sizeof(input), stdin);
+    char ** args = parse_args(input);
+    if (strcmp(args[0], "place") == 0){
+      int xcoord = atoi(args[1]);
+      int ycoord = atoi(args[2]);
+      int shipType = atoi(args[3]);
+      //command is "$place xcoord ycoord shiptype verticalorhorizontal"
+      if (placeShip(xcoord, ycoord, shipType, args[4], p1.board) == 0){ //p2.board if the current player is player 2
+        printf("Ship placed unsuccessfully. Try again :(\n");
+      }
+      else{
+        printf("Ship placed successfully :)\n");
+        if (shipType == 1){
+          ship1placed = 1;
+        }
+        if (shipType == 2){
+          ship2placed = 1;
+        }
+        if (shipType == 3){
+          ship3placed = 1;
+        }
+        if (shipType == 4){
+          ship4placed = 1;
+        }
+        if (shipType == 5){
+          ship5placed = 1;
+        }
+      }
+    }
+  }
+
+  //gameplay commands
   char command[1000];
   while (running){
     printf("Awaiting your next command:");
