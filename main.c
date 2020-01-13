@@ -313,9 +313,11 @@ int main () {
       //command is "$place xcoord ycoord shiptype verticalorhorizontal"
       if (placeShip(xcoord, ycoord, shipType, args[4], p1.board) == 0){ //p2.board if the current player is player 2
         printf("Ship placed unsuccessfully. Try again :(\n");
+        display("ally", 1, p1, p2);
       }
       else{
         printf("Ship placed successfully :)\n");
+        display("ally", 1, p1, p2);
         if (shipType == 1){
           ship1placed = 1;
         }
