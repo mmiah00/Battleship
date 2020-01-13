@@ -174,6 +174,7 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
             printf("X");//miss
           }
         }
+        printf("\n");
       }
       return 1;
     }
@@ -193,6 +194,7 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
             printf("X");//miss
           }
         }
+        printf("\n");
       }
       return 1;
     }
@@ -214,6 +216,7 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
             printf("X");//miss
           }
         }
+        printf("\n");
       }
       return 1;
     }
@@ -233,6 +236,7 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
             printf("X");//miss
           }
         }
+        printf("\n");
       }
       return 1;
     }
