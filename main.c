@@ -246,6 +246,39 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
   }
 }
 
+int attack(int xcoord, int ycoord, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
+  if (currentPlayer == 1){
+    if (p2Board.board[xcoord][ycoord] == 0){//there is nothing here but h2o
+      //missed
+      p2Board.board[xcoord][ycoord] == 3;//3 indicates a miss
+      return 0;//unsuccessful attack
+    }
+    else if (p2Board.board[xcoord][ycoord] == 1){//there is a ship here
+      p2Board.board[xcoord][ycoord] == 2;//2 indicates a successful hit
+      return 1;//successful attack
+    }
+    else{//everything else if it isn't 0 or 1 is either a 2 or a 3
+      printf("You already attacked this position and just wasted your turn. haha\n");
+      return 0;//unsuccessful attack
+    }
+  }
+  if (currentPlayer == 2){
+    if (p1Board.board[xcoord][ycoord] == 0){//there is nothing here but h2o
+      //missed
+      p1Board.board[xcoord][ycoord] == 3;//3 indicates a miss
+      return 0;//unsuccessful attack
+    }
+    else if (p1Board.board[xcoord][ycoord] == 1){//there is a ship here
+      p1Board.board[xcoord][ycoord] == 2;//2 indicates a successful hit
+      return 1;//successful attack
+    }
+    else{//everything else if it isn't 0 or 1 is either a 2 or a 3
+      printf("You already attacked this position and just wasted your turn. haha\n");
+      return 0;//unsuccessful attack
+    }
+  }
+}
+
 int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
@@ -262,6 +295,22 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "enemy") == 0){
     printf("Displaying enemy's board\n");
     display("enemy", currentPlayer, p1Board, p2Board);
+  }
+  else if (strcmp(command[0], "attack") == 0){
+    int xcoord = atoi(command[1]);
+    int ycoord = atoi(command[2]);
+    if (xcoord > 7 || xcoord < 0 || ycoord > 7 || ycoord < 0){
+
+    }
+    else{
+      int status = attack(xcoord, ycoord, currentPlayer, p1Board, p2Board);
+      if (status == 1){
+        printf("Ship found and attacked at this location!\n");
+      }
+      else{
+        printf("Unsuccessful attack :(\n");
+      }
+    }
   }
   return 0;
 }
@@ -342,6 +391,7 @@ int main () {
         }
       }
     }
+    free(args);
   }
 
   //gameplay commands
