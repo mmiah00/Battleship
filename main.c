@@ -137,6 +137,7 @@ int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]
     shipSize = 5;
   }
   if (isValid(xcoord, ycoord, shipSize, HorV, board) == 0){//returns 0 if ship can't be placed
+  printf("Invalid coordinates\n");
     return 0;//false
   }
   else{//ship location is valid
