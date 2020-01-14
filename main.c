@@ -117,7 +117,7 @@ int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] )
   }
 }
 int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]){
-  if (shipType < 1 || shipType > 5 || xcoord > 7 || xcoord < 0 || ycoord > 7 || ycoord < 0){//there are only 5 types of ships
+  if (shipType < 1 && shipType > 5 && xcoord > 7 && xcoord < 0 && ycoord > 7 && ycoord < 0){//there are only 5 types of ships
     return 0;
   }
   int shipSize = 0;
@@ -137,7 +137,7 @@ int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]
     shipSize = 5;
   }
   if (isValid(xcoord, ycoord, shipSize, HorV, board) == 0){//returns 0 if ship can't be placed
-  printf("Invalid coordinates\n");
+    printf("Invalid coordinates\n");
     return 0;//false
   }
   else{//ship location is valid
