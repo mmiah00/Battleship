@@ -408,6 +408,7 @@ int main () {
     else{
       executeCommand(args2, 1, p1, p2);
     }
+    free(args2);
   }
   return 0;
 }
