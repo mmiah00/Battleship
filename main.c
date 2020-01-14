@@ -257,9 +257,11 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "ally") == 0){
     printf("Displaying your board and ships\n");
+    display("ally", currentPlayer, p1Board, p2Board);
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "enemy") == 0){
     printf("Displaying enemy's board\n");
+    display("enemy", currentPlayer, p1Board, p2Board);
   }
   return 0;
 }
@@ -349,12 +351,12 @@ int main () {
     fgets(command, sizeof(command), stdin);
     command[strlen(command) - 1] = '\0';
     char ** args2 = parse_args(command);
-    printf("Your command is %s\n\n", command);
+    //printf("Your command is %s\n\n", command);
     if (strcmp(args2[0], "exit") == 0){
       running = 0;
     }
     else{
-      executeCommand(args2, -1, p1, p2);
+      executeCommand(args2, 1, p1, p2);
     }
   }
   return 0;
