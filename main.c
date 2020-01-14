@@ -264,16 +264,14 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   return 0;
 }
 
-char ** parse_args (char * line) {
-  char ** ans = malloc (256);
-  int i = 0;
-  char * temp;
-  while (temp) {
-    temp = strsep(&line, " ");
-    ans[i] = temp;
-    i ++;
+char ** parse_args( char * line ){
+  char ** var = malloc(sizeof(char *) * 5);
+  int size;
+  for (size = 0; size < 5; size++){
+    var[size] = strsep(&line, " ");
   }
-  return ans;
+  var[size] = NULL;
+  return var;
 }
 
 int main () {
@@ -305,7 +303,7 @@ int main () {
   int ship4placed = 0; //four coords long
   int ship5placed = 0; //five coords long
   char input[1000];
-  while (ship1placed != 1 && ship2placed != 1 && ship3placed != 1 && ship4placed != 1 && ship5placed != 1){//only continues to gameplay if all ships are placed
+  while (ship1placed == 0 || ship2placed == 0 || ship3placed == 0 || ship4placed == 0 || ship5placed == 0){//only continues to gameplay if all ships are placed
     printf("Please place your ships to continue\n");
     fgets(input,sizeof(input), stdin);
     input[strlen(input) - 1] = '\0';
@@ -323,12 +321,15 @@ int main () {
         printf("Ship placed successfully :)\n");
         display("ally", 1, p1, p2);
         if (shipType == 1){
+          //printf("runned\n");
           ship1placed = 1;
         }
         if (shipType == 2){
+          //printf("runned\n");
           ship2placed = 1;
         }
         if (shipType == 3){
+          //printf("runned\n");
           ship3placed = 1;
         }
         if (shipType == 4){
