@@ -247,33 +247,39 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
   }
 }
 
-int attack(int xcoord, int ycoord, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
+int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Board[8][8]){
   if (currentPlayer == 1){
-    if (p2Board.board[xcoord][ycoord] == 0){//there is nothing here but h2o
+    if (p2Board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
-      p2Board.board[xcoord][ycoord] == 3;//3 indicates a miss
+      p2Board[xcoord][ycoord] = 3;//3 indicates a miss
+      //display("enemy", currentPlayer, p1Board, p2Board);
       return 0;//unsuccessful attack
     }
-    else if (p2Board.board[xcoord][ycoord] == 1){//there is a ship here
-      p2Board.board[xcoord][ycoord] == 2;//2 indicates a successful hit
+    else if (p2Board[xcoord][ycoord] == 1){//there is a ship here
+      p2Board[xcoord][ycoord] = 2;//2 indicates a successful hit
+      //display("enemy", currentPlayer, p1Board, p2Board);
       return 1;//successful attack
     }
     else{//everything else if it isn't 0 or 1 is either a 2 or a 3
+      //display("enemy", currentPlayer, p1Board, p2Board);
       printf("You already attacked this position and just wasted your turn. haha\n");
       return 0;//unsuccessful attack
     }
   }
   if (currentPlayer == 2){
-    if (p1Board.board[xcoord][ycoord] == 0){//there is nothing here but h2o
+    if (p1Board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
-      p1Board.board[xcoord][ycoord] == 3;//3 indicates a miss
+      p1Board[xcoord][ycoord] = 3;//3 indicates a miss
+      //display("enemy", currentPlayer, p1Board, p2Board);
       return 0;//unsuccessful attack
     }
-    else if (p1Board.board[xcoord][ycoord] == 1){//there is a ship here
-      p1Board.board[xcoord][ycoord] == 2;//2 indicates a successful hit
+    else if (p1Board[xcoord][ycoord] == 1){//there is a ship here
+      p1Board[xcoord][ycoord] = 2;//2 indicates a successful hit
+      //display("enemy", currentPlayer, p1Board, p2Board);
       return 1;//successful attack
     }
     else{//everything else if it isn't 0 or 1 is either a 2 or a 3
+      //display("enemy", currentPlayer, p1Board, p2Board);
       printf("You already attacked this position and just wasted your turn. haha\n");
       return 0;//unsuccessful attack
     }
@@ -301,15 +307,19 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
     int xcoord = atoi(command[1]);
     int ycoord = atoi(command[2]);
     if (xcoord > 7 || xcoord < 0 || ycoord > 7 || ycoord < 0){
-
+      return 0;
     }
     else{
-      int status = attack(xcoord, ycoord, currentPlayer, p1Board, p2Board);
+      int status = attack(ycoord, xcoord, currentPlayer, p1Board.board, p2Board.board);
       if (status == 1){
         printf("Ship found and attacked at this location!\n");
+        display("ally", 1, p1Board, p2Board);
+        return 1;
       }
       else{
         printf("Unsuccessful attack :(\n");
+        display("ally", 1, p1Board, p2Board);
+        return 0;
       }
     }
   }
@@ -407,9 +417,9 @@ int main () {
       running = 0;
     }
     else{
-      executeCommand(args2, 1, p1, p2);
+      executeCommand(args2, 2, p1, p2);
     }
-    free(args2);
+    //free(args2);
   }
   return 0;
 }
