@@ -248,6 +248,8 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
 }
 
 int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Board[8][8]){
+  //FILE *tile = malloc(100);
+  //tile = fopen("history.txt", "a");
   if (currentPlayer == 1){
     if (p2Board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
@@ -271,6 +273,8 @@ int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Boa
       //missed
       p1Board[xcoord][ycoord] = 3;//3 indicates a miss
       //display("enemy", currentPlayer, p1Board, p2Board);
+      //fprintf(tile,"Player %d attacked %d %d and missed\n", currentPlayer, ycoord, xcoord);
+      //fclose(tile);
       return 0;//unsuccessful attack
     }
     else if (p1Board[xcoord][ycoord] == 1){//there is a ship here
@@ -402,7 +406,7 @@ int main () {
         }
       }
     }
-    //free(args);
+    free(args);
   }
 
   //gameplay commands
@@ -419,7 +423,7 @@ int main () {
     else{
       executeCommand(args2, 2, p1, p2);
     }
-    //free(args2);
+    free(args2);
   }
   return 0;
 }
