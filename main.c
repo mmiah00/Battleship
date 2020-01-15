@@ -365,7 +365,7 @@ int main () {
       int ycoord = atoi(args[2]);
       int shipType = atoi(args[3]);
       //command is "$place xcoord ycoord shiptype verticalorhorizontal"
-      if (placeShip(xcoord, ycoord, shipType, args[4], p1.board) == 0){ //p2.board if the current player is player 2
+      if (placeShip(ycoord, xcoord, shipType, args[4], p1.board) == 0){ //p2.board if the current player is player 2
         printf("Ship placed unsuccessfully. Try again :(\n");
         display("ally", 1, p1, p2);
       }
@@ -392,7 +392,7 @@ int main () {
         }
       }
     }
-    free(args);
+    //free(args);
   }
 
   //gameplay commands
