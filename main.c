@@ -248,8 +248,7 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
 }
 
 int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Board[8][8]){
-  //FILE *tile = malloc(100);
-  //tile = fopen("history.txt", "a");
+  //FILE *tile = fopen("history.txt", "a");
   if (currentPlayer == 1){
     if (p2Board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
@@ -280,6 +279,7 @@ int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Boa
     else if (p1Board[xcoord][ycoord] == 1){//there is a ship here
       p1Board[xcoord][ycoord] = 2;//2 indicates a successful hit
       //display("enemy", currentPlayer, p1Board, p2Board);
+      //fclose(tile);
       return 1;//successful attack
     }
     else{//everything else if it isn't 0 or 1 is either a 2 or a 3
@@ -318,11 +318,35 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
       if (status == 1){
         printf("Ship found and attacked at this location!\n");
         display("ally", 1, p1Board, p2Board);
+        int fd = open("history.txt", O_APPEND | O_CREAT, 0644);
+        char sentence[1000];
+        fgets(sentence, 1000, stdout);
+        printf("Player %d\n", currentPlayer);
+        write(fd, sentence, 1000);
+        close(fd);
         return 1;
       }
       else{
         printf("Unsuccessful attack :(\n");
         display("ally", 1, p1Board, p2Board);
+        int fd = open("history.txt", O_APPEND | O_CREAT, 0644);
+        char sentence[1000] = "\0";
+        if (currentPlayer == 1){
+          strcat(sentence, "Player 1 ");
+        }
+        else{
+          strcat(sentence, "Player 2 ");
+        }
+        strcat(sentence, "attacked ");
+        strcat(sentence, command[1]);
+        strcat(sentence, " ");
+        strcat(sentence, command[2]);
+        strcat(sentence, " and failed\n");
+        printf("%s", sentence);
+        int temp = write(fd, &sentence, strlen(sentence));
+        printf("Num is %d\n", temp);
+        printf("Error is: %s\n", strerror(errno));
+        close(fd);
         return 0;
       }
     }
