@@ -329,23 +329,24 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
       else{
         printf("Unsuccessful attack :(\n");
         display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_CREAT, 0644);
-        char sentence[1000] = "\0";
-        if (currentPlayer == 1){
-          strcat(sentence, "Player 1 ");
-        }
-        else{
-          strcat(sentence, "Player 2 ");
-        }
-        strcat(sentence, "attacked ");
-        strcat(sentence, command[1]);
-        strcat(sentence, " ");
-        strcat(sentence, command[2]);
-        strcat(sentence, " and failed\n");
-        printf("%s", sentence);
+        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT);
+        char sentence[1000] = "It works";
+        // if (currentPlayer == 1){
+        //   strcat(sentence, "Player 1 ");
+        // }
+        // else{
+        //   strcat(sentence, "Player 2 ");
+        // }
+        // strcat(sentence, "attacked ");
+        // strcat(sentence, command[1]);
+        // strcat(sentence, " ");
+        // strcat(sentence, command[2]);
+        // strcat(sentence, " and failed\n");
+        // printf("%s", sentence);
         int temp = write(fd, &sentence, strlen(sentence));
-        printf("Num is %d\n", temp);
-        printf("Error is: %s\n", strerror(errno));
+        //printf("Content is: --%s--\n", sentence);
+        //printf("Num is %d\n", temp);
+        //printf("Error is: %s\n", strerror(temp));
         close(fd);
         return 0;
       }
