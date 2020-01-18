@@ -86,7 +86,7 @@ struct coordinate  {
 
 
 int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] ){
-  if (strcmp(HorV, "vertical") == 0){//check vertically
+  if (strcmp(HorV, "v") == 0){//check vertically
     for (int r = xcoord; r < 8 && shipSize != 0; r++){
       if (board[r][ycoord] == 0){//if spot is empty
         shipSize--;//one coord of ship is valid
@@ -99,7 +99,7 @@ int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] )
       return 0; //ship is too long to be placed here
     }
   }
-  else if (strcmp(HorV, "horizontal") == 0){//check horizontally
+  else if (strcmp(HorV, "h") == 0){//check horizontally
     for (int c = ycoord; c < 8 && shipSize != 0; c++){
       if (board[xcoord][c] == 0){
         shipSize--;
@@ -141,13 +141,13 @@ int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]
     return 0;//false
   }
   else{//ship location is valid
-    if (strcmp(HorV, "vertical") == 0){
+    if (strcmp(HorV, "v") == 0){
       for (int r = xcoord; shipSize != 0; r++){
         board[r][ycoord] = 1;
         shipSize--;
       }
     }
-    else if (strcmp(HorV, "horizontal") == 0){
+    else if (strcmp(HorV, "h") == 0){
       for (int c = ycoord; shipSize != 0; c++){
         board[xcoord][c] = 1;
         shipSize--;
@@ -247,17 +247,17 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
   }
 }
 
-int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Board[8][8]){
+int attack(int xcoord, int ycoord, int currentPlayer,struct gameBoard * p1Board, struct gameBoard * p2Board){
   //FILE *tile = fopen("history.txt", "a");
   if (currentPlayer == 1){
-    if (p2Board[xcoord][ycoord] == 0){//there is nothing here but h2o
+    if (p2Board->board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
-      p2Board[xcoord][ycoord] = 3;//3 indicates a miss
+      p2Board->board[xcoord][ycoord] = 3;//3 indicates a miss
       //display("enemy", currentPlayer, p1Board, p2Board);
       return 0;//unsuccessful attack
     }
-    else if (p2Board[xcoord][ycoord] == 1){//there is a ship here
-      p2Board[xcoord][ycoord] = 2;//2 indicates a successful hit
+    else if (p2Board->board[xcoord][ycoord] == 1){//there is a ship here
+      p2Board->board[xcoord][ycoord] = 2;//2 indicates a successful hit
       //display("enemy", currentPlayer, p1Board, p2Board);
       return 1;//successful attack
     }
@@ -268,16 +268,16 @@ int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Boa
     }
   }
   if (currentPlayer == 2){
-    if (p1Board[xcoord][ycoord] == 0){//there is nothing here but h2o
+    if (p1Board->board[xcoord][ycoord] == 0){//there is nothing here but h2o
       //missed
-      p1Board[xcoord][ycoord] = 3;//3 indicates a miss
+      p1Board->board[xcoord][ycoord] = 3;//3 indicates a miss
       //display("enemy", currentPlayer, p1Board, p2Board);
       //fprintf(tile,"Player %d attacked %d %d and missed\n", currentPlayer, ycoord, xcoord);
       //fclose(tile);
       return 0;//unsuccessful attack
     }
-    else if (p1Board[xcoord][ycoord] == 1){//there is a ship here
-      p1Board[xcoord][ycoord] = 2;//2 indicates a successful hit
+    else if (p1Board->board[xcoord][ycoord] == 1){//there is a ship here
+      p1Board->board[xcoord][ycoord] = 2;//2 indicates a successful hit
       //display("enemy", currentPlayer, p1Board, p2Board);
       //fclose(tile);
       return 1;//successful attack
@@ -290,7 +290,7 @@ int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Boa
   }
 }
 
-int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){
+int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
     printf("...\n");
@@ -314,7 +314,9 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
       return 0;
     }
     else{
-      int status = attack(ycoord, xcoord, currentPlayer, p1Board.board, p2Board.board);
+      //int (*pointer2)[8] = p2Board.board;
+      int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
+      printf("[0][0] is %d\n", p1Board.board[0][0]);
       if (status == 1){
         printf("Ship found and attacked at this location!\n");
         display("ally", 1, p1Board, p2Board);
@@ -324,6 +326,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         printf("Player %d\n", currentPlayer);
         write(fd, sentence, 1000);
         close(fd);
+        printf("[0][0] is %d\n", p1Board.board[0][0]);
         return 1;
       }
       else{
@@ -431,7 +434,7 @@ int main () {
         }
       }
     }
-    free(args);
+    //free(args);
   }
 
   //gameplay commands
@@ -446,9 +449,12 @@ int main () {
       running = 0;
     }
     else{
-      executeCommand(args2, 2, p1, p2);
+      struct gameBoard *pointer1 = &p1;
+      struct gameBoard *pointer2 = &p2;
+      executeCommand(args2, 2, p1, p2, pointer1, pointer2);
+      printf("WRONG[0][0] is %d", p1.board[0][0]);
     }
-    free(args2);
+    //free(args2);
   }
   return 0;
 }
