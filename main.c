@@ -376,8 +376,40 @@ char ** parse_args( char * line ){
   return var;
 }
 
+void placingShips (struct gameBoard * g, int shipType) {
+  if (shipType < 6) {
+    printf("PLACING A SIZE %d SHIP\n", shipType);
+    char input [1000]; //should only be x_y
+    char orientation [strlen("horizontal")];
+
+    printf ("   What are your coordinates? ", shipType);
+    fgets (input, sizeof (input), stdin);
+    *strchr(input, '\n') = 0;
+    char ** coords = parse_args (input);
+
+    struct coordinate c;
+    c.x = atoi (coords[0]);
+    c.y = atoi (coords[1]);
+
+    printf ("   Please type 'v' for VERTICAL or 'h' for HORIZONTAL: ");
+    fgets (orientation, sizeof (orientation), stdin);
+    *strchr(orientation, '\n') = 0;
+    char ** o = parse_args (orientation);
+
+    printf ("\n");
+
+    if (placeShip (c.x, c.y, shipType, o[0], g->board, g) == 1) {
+      placingShips (g, shipType + 1);
+    }
+    else {
+      placingShips (g, shipType);
+    }
+  }
+
+}
+
 int main () {
-  introscreen ();
+  //introscreen ();
   int running = 1;
 
   struct gameBoard p1;
@@ -400,6 +432,7 @@ int main () {
 
   //int historyFile = open("history.txt", O_CREAT, 0644);
 
+  /*
   //filling board with ships
   int ship1placed = 0; //two coords long
   int ship2placed = 0; //three coords long
@@ -447,6 +480,9 @@ int main () {
     }
     //free(args);
   }
+  */
+  placingShips (pointer1, 1);
+  display ("ally", 1, p1, p2, pointer1, pointer2);
 
   //gameplay commands
   char command[1000];
