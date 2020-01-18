@@ -160,7 +160,9 @@ int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]
 int display(char * status, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard * pointer1, struct gameBoard * pointer2){
   if (strcmp(status, "ally") == 0){//display your board
     if (currentPlayer == 1){//if player 1 display p1Board
+      printf("   0 1 2 3 4 5 6 7\n\n");
       for (int r = 0; r < 8; r++){
+      printf("%d  ", r);
         for (int c = 0; c < 8; c++){
           if (pointer1->board[r][c] == 0){//0 represents water
             printf("~ ");//water
@@ -180,7 +182,9 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       return 1;
     }
     else{//if player 2 display p2Board
+      printf("   0 1 2 3 4 5 6 7\n\n");
       for (int r = 0; r < 8; r++){
+      printf("%d  ", r);
         for (int c = 0; c < 8; c++){
           if (pointer2->board[r][c] == 0){//0 represents water
             printf("~ ");//water
@@ -202,7 +206,9 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
   }
   else if (strcmp(status, "enemy") == 0){//display enemy board
     if (currentPlayer == 1){//if player 1 display p2Board
+      printf("   0 1 2 3 4 5 6 7\n\n");
       for (int r = 0; r < 8; r++){
+      printf("%d  ", r);
         for (int c = 0; c < 8; c++){
           if (p2Board.board[r][c] == 0){//0 represents water
             printf("~ ");//water
@@ -222,7 +228,9 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       return 1;
     }
     else{//if player 2 display p1Board
+      printf("   0 1 2 3 4 5 6 7\n\n");
       for (int r = 0; r < 8; r++){
+      printf("%d  ", r);
         for (int c = 0; c < 8; c++){
           if (p1Board.board[r][c] == 0){//0 represents water
             printf("~ ");//water
