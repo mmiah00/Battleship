@@ -163,16 +163,16 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       for (int r = 0; r < 8; r++){
         for (int c = 0; c < 8; c++){
           if (pointer1->board[r][c] == 0){//0 represents water
-            printf("~");//water
+            printf("~ ");//water
           }
           if (pointer1->board[r][c] == 1){//1 represents a ship
-            printf("H");//ship
+            printf("H ");//ship
           }
           if (pointer1->board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O");//hit
+            printf("O ");//hit
           }
           if (pointer1->board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X");//miss
+            printf("X ");//miss
           }
         }
         printf("\n");
@@ -183,16 +183,16 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       for (int r = 0; r < 8; r++){
         for (int c = 0; c < 8; c++){
           if (pointer2->board[r][c] == 0){//0 represents water
-            printf("~");//water
+            printf("~ ");//water
           }
           if (pointer2->board[r][c] == 1){//1 represents a ship
-            printf("H");//ship
+            printf("H ");//ship
           }
           if (pointer2->board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O");//hit
+            printf("O ");//hit
           }
           if (pointer2->board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X");//miss
+            printf("X ");//miss
           }
         }
         printf("\n");
@@ -205,16 +205,16 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       for (int r = 0; r < 8; r++){
         for (int c = 0; c < 8; c++){
           if (p2Board.board[r][c] == 0){//0 represents water
-            printf("~");//water
+            printf("~ ");//water
           }
           if (p2Board.board[r][c] == 1){//1 represents a ship but you can't see enemy ships
-            printf("~");//hidden ship
+            printf("~ ");//hidden ship
           }
           if (p2Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O");//hit
+            printf("O ");//hit
           }
           if (p2Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X");//miss
+            printf("X ");//miss
           }
         }
         printf("\n");
@@ -225,16 +225,16 @@ int display(char * status, int currentPlayer, struct gameBoard p1Board, struct g
       for (int r = 0; r < 8; r++){
         for (int c = 0; c < 8; c++){
           if (p1Board.board[r][c] == 0){//0 represents water
-            printf("~");//water
+            printf("~ ");//water
           }
           if (p1Board.board[r][c] == 1){//1 represents a ship but you can't see enemy ships
-            printf("~");//hidden ship
+            printf("~ ");//hidden ship
           }
           if (p1Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O");//hit
+            printf("O ");//hit
           }
           if (p1Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X");//miss
+            printf("X ");//miss
           }
         }
         printf("\n");
