@@ -311,6 +311,18 @@ int displayHistory(){
   return 1;
 }
 
+void exportHistory(char * path){
+  int id = fork();
+  if (id == 0){
+    char *args[4] = {"mv", "history.txt", path, 0};
+    //strcpy(args[2], path);
+    int a = execvp(args[0], args);
+  }
+  else{
+    wait(0);
+  }
+}
+
 int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
@@ -425,6 +437,7 @@ char ** parse_args( char * line ){
 
 int main () {
   introscreen ();
+
   int running = 1;
 
   struct gameBoard p1;
@@ -527,5 +540,16 @@ int main () {
         }
       }
     }
+
+    //int exported = 0;
+    //while (exported == 0){//only stops if history.txt is sent somewhere
+    printf("Where do you want to export the history file? Enter . to leave it here:\n");
+    char stuff[1000];
+    fgets(stuff,sizeof(stuff), stdin);
+    //stuff[strlen(input) - 1] = '\0';
+    char ** argy = parse_args(stuff);
+    exportHistory(argy[0]);
+    //}
+
     return 0;
   }
