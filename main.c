@@ -540,11 +540,11 @@ int main () {
       }
       else{
         if (gameFinished == 1){
-          printf("Player 1 wins wooooooooooooooooooo\n");
+          printf("Player 1 wins wooooooooooooooooooo\n\n");
           running = 0;
         }
         else{
-          printf("Player 2 wins wooooooooooooooooooo\n");
+          printf("Player 2 wins wooooooooooooooooooo\n\n");
           running = 0;
         }
       }
@@ -552,7 +552,7 @@ int main () {
 
     //int exported = 0;
     //while (exported == 0){//only stops if history.txt is sent somewhere
-    printf("Where do you want to export the history file? Enter . to leave it here:\n");
+    printf("Where do you want to export the history file?\nEnter . to leave it here:");
     char stuff[1000];
     fgets(stuff,sizeof(stuff), stdin);
     //stuff[strlen(input) - 1] = '\0';
