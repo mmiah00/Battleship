@@ -324,7 +324,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
     else{
       //int (*pointer2)[8] = p2Board.board;
       int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
-      printf("[0][0] is %d\n", p1Board.board[0][0]);
+      //printf("[0][0] is %d\n", p1Board.board[0][0]);
       if (status == 1){
         printf("Ship found and attacked at this location!\n");
         //display("ally", 1, p1Board, p2Board);
@@ -334,7 +334,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         printf("Player %d\n", currentPlayer);
         write(fd, sentence, 1000);
         close(fd);
-        printf("[0][0] is %d\n", p1Board.board[0][0]);
+        //printf("[0][0] is %d\n", p1Board.board[0][0]);
         return 1;
       }
       else{
@@ -367,7 +367,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
 }
 
 int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){
-  int player1Finished = 1;//1 is finish ; game is finished unless proven otherwise under
+  int player1Finished = 2;//2 is finish ; game is finished unless proven otherwise under
   for (int r = 0; r < 8; r++){
     for (int c = 0; c < 8; c++){
       if (pointer2->board[c][r] == 1){//1 is a ship that hasnt been found yet
@@ -377,16 +377,16 @@ int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){
     }
   }
 
-  int player2Finished = 2;
+  int player2Finished = 1;
   for (int a = 0; a < 8; a++){
     for (int b = 0; b < 8; b++){
       if (pointer1->board[b][a] == 1){
         player2Finished = 0;
-        return player2FInished;
+        return player2Finished;
       }
     }
   }
-  if (player1Finished == 1){
+  if (player1Finished == 2){//player1's board has no more unfound ships so player 2 wins meaning we return 2 for player 2
     return player1Finished;
   }
   else{
@@ -494,7 +494,7 @@ int main () {
         }
         else{
           executeCommand(args2, 2, p1, p2, pointer1, pointer2);
-          printf("WRONG[0][0] is %d", p1.board[0][0]);
+          //printf("WRONG[0][0] is %d", p1.board[0][0]);
         }
         //free(args2);
       }
