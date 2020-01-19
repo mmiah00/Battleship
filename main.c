@@ -8,6 +8,7 @@
 #include <sys/ipc.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 void introscreen () { //thank you patorjk.com for the ASCII art
   printf ("██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗    ████████╗ ██████╗     \n");
@@ -298,6 +299,18 @@ int attack(int xcoord, int ycoord, int currentPlayer,struct gameBoard * p1Board,
   }
 }
 
+int displayHistory(){
+  int id = fork();
+  if (id == 0){
+    char *args[] = {"cat", "history.txt"};
+    execvp(args[0], args);
+  }
+  else{
+    wait(0);
+  }
+  return 1;
+}
+
 int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
@@ -305,6 +318,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   }
   else if (strcmp(command[0], "history") == 0){
     printf("Displaying game history:\n");
+    displayHistory();
     //history ();
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "ally") == 0){
@@ -328,7 +342,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
       if (status == 1){
         printf("Ship found and attacked at this location!\n");
         //display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_CREAT, 0644);
+        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
         char sentence[1000] = "";
          if (currentPlayer == 1){
            strcat(sentence, "Player 1 ");
