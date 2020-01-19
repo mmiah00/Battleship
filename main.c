@@ -302,8 +302,8 @@ int attack(int xcoord, int ycoord, int currentPlayer,struct gameBoard * p1Board,
 int displayHistory(){
   int id = fork();
   if (id == 0){
-    char *args[] = {"cat", "history.txt"};
-    execvp(args[0], args);
+    char *args[] = {"cat", "history.txt", 0};
+    int a = execvp(args[0], args);
   }
   else{
     wait(0);
