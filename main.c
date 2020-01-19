@@ -394,6 +394,7 @@ int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){
   }
 }
 
+
 char ** parse_args( char * line ){
   char ** var = malloc(sizeof(char *) * 5);
   int size;
@@ -404,40 +405,8 @@ char ** parse_args( char * line ){
   return var;
 }
 
-void placingShips (struct gameBoard * g, int shipType) {
-  if (shipType < 6) {
-    printf("PLACING A SIZE %d SHIP\n", shipType);
-    char input [1000]; //should only be x_y
-    char orientation [strlen("horizontal")];
-
-    printf ("   What are your coordinates? ", shipType);
-    fgets (input, sizeof (input), stdin);
-    *strchr(input, '\n') = 0;
-    char ** coords = parse_args (input);
-
-    struct coordinate c;
-    c.x = atoi (coords[0]);
-    c.y = atoi (coords[1]);
-
-    printf ("   Please type 'v' for VERTICAL or 'h' for HORIZONTAL: ");
-    fgets (orientation, sizeof (orientation), stdin);
-    *strchr(orientation, '\n') = 0;
-    char ** o = parse_args (orientation);
-
-    printf ("\n");
-
-    if (placeShip (c.x, c.y, shipType, o[0], g->board, g) == 1) {
-      placingShips (g, shipType + 1);
-    }
-    else {
-      placingShips (g, shipType);
-    }
-  }
-
-}
-
 int main () {
-  //introscreen ();
+  introscreen ();
   int running = 1;
 
   struct gameBoard p1;
@@ -460,7 +429,6 @@ int main () {
 
   //int historyFile = open("history.txt", O_CREAT, 0644);
 
-  /*
   //filling board with ships
   int ship1placed = 0; //two coords long
   int ship2placed = 0; //three coords long
@@ -508,41 +476,38 @@ int main () {
     }
     //free(args);
   }
-  */
-  placingShips (pointer1, 1);
-  display ("ally", 1, p1, p2, pointer1, pointer2);
 
   //gameplay commands
-  int gameFinished = 0;//0 is unfinished
-  char command[1000];
-  while (running){
-    gameFinished = finished(pointer1, pointer2);
-    if (gameFinished == 0){//game is unfinished
-      printf("Awaiting your next command:");
-      fgets(command, sizeof(command), stdin);
-      command[strlen(command) - 1] = '\0';
-      char ** args2 = parse_args(command);
-      //printf("Your command is %s\n\n", command);
-      if (strcmp(args2[0], "exit") == 0){
-        running = 0;
-        return 0;
+    int gameFinished = 0;//0 is unfinished
+    char command[1000];
+    while (running){
+      gameFinished = finished(pointer1, pointer2);
+      if (gameFinished == 0){//game is unfinished
+        printf("Awaiting your next command:");
+        fgets(command, sizeof(command), stdin);
+        command[strlen(command) - 1] = '\0';
+        char ** args2 = parse_args(command);
+        //printf("Your command is %s\n\n", command);
+        if (strcmp(args2[0], "exit") == 0){
+          running = 0;
+          return 0;
+        }
+        else{
+          executeCommand(args2, 2, p1, p2, pointer1, pointer2);
+          printf("WRONG[0][0] is %d", p1.board[0][0]);
+        }
+        //free(args2);
       }
       else{
-        executeCommand(args2, 2, p1, p2, pointer1, pointer2);
-        printf("WRONG[0][0] is %d", p1.board[0][0]);
-      }
-      //free(args2);
-    }
-    else{
-      if (gameFinished == 1){
-        printf("Player 1 wins wooooooooooooooooooo\n");
-        running = 0;
-      }
-      else{
-        printf("Player 2 wins wooooooooooooooooooo\n");
-        running = 0;
+        if (gameFinished == 1){
+          printf("Player 1 wins wooooooooooooooooooo\n");
+          running = 0;
+        }
+        else{
+          printf("Player 2 wins wooooooooooooooooooo\n");
+          running = 0;
+        }
       }
     }
+    return 0;
   }
-  return 0;
-}
