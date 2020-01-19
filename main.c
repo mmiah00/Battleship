@@ -366,6 +366,34 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   return 0;
 }
 
+int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){
+  int player1Finished = 1;//1 is finish ; game is finished unless proven otherwise under
+  for (int r = 0; r < 8; r++){
+    for (int c = 0; c < 8; c++){
+      if (pointer2->board[c][r] == 1){//1 is a ship that hasnt been found yet
+        player1Finished = 0;//player 1 isnt finished because there is a ship that hasnt been found
+        return player1Finished;
+      }
+    }
+  }
+
+  int player2Finished = 2;
+  for (int a = 0; a < 8; a++){
+    for (int b = 0; b < 8; b++){
+      if (pointer1->board[b][a] == 1){
+        player2Finished = 0;
+        return player2FInished;
+      }
+    }
+  }
+  if (player1Finished == 1){
+    return player1Finished;
+  }
+  else{
+    return player2Finished;
+  }
+}
+
 char ** parse_args( char * line ){
   char ** var = malloc(sizeof(char *) * 5);
   int size;
@@ -449,21 +477,36 @@ int main () {
   }
 
   //gameplay commands
+  int gameFinished = 0;//0 is unfinished
   char command[1000];
   while (running){
-    printf("Awaiting your next command:");
-    fgets(command, sizeof(command), stdin);
-    command[strlen(command) - 1] = '\0';
-    char ** args2 = parse_args(command);
-    //printf("Your command is %s\n\n", command);
-    if (strcmp(args2[0], "exit") == 0){
-      running = 0;
+    gameFinished = finished(pointer1, pointer2);
+    if (gameFinished == 0){//game is unfinished
+      printf("Awaiting your next command:");
+      fgets(command, sizeof(command), stdin);
+      command[strlen(command) - 1] = '\0';
+      char ** args2 = parse_args(command);
+      //printf("Your command is %s\n\n", command);
+      if (strcmp(args2[0], "exit") == 0){
+        running = 0;
+        return 0;
+      }
+      else{
+        executeCommand(args2, 2, p1, p2, pointer1, pointer2);
+        printf("WRONG[0][0] is %d", p1.board[0][0]);
+      }
+      //free(args2);
     }
     else{
-      executeCommand(args2, 2, p1, p2, pointer1, pointer2);
-      printf("WRONG[0][0] is %d", p1.board[0][0]);
+      if (gameFinished == 1){
+        printf("Player 1 wins wooooooooooooooooooo\n");
+        running = 0;
+      }
+      else{
+        printf("Player 2 wins wooooooooooooooooooo\n");
+        running = 0;
+      }
     }
-    //free(args2);
   }
   return 0;
 }
