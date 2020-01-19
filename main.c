@@ -329,35 +329,39 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         printf("Ship found and attacked at this location!\n");
         //display("ally", 1, p1Board, p2Board);
         int fd = open("history.txt", O_APPEND | O_CREAT, 0644);
-        char sentence[1000];
-        fgets(sentence, 1000, stdout);
-        printf("Player %d\n", currentPlayer);
-        write(fd, sentence, 1000);
+        char sentence[1000] = "";
+         if (currentPlayer == 1){
+           strcat(sentence, "Player 1 ");
+        }
+        else{
+           strcat(sentence, "Player 2 ");
+        }
+        strcat(sentence, "attacked ");
+        strcat(sentence, command[1]);
+        strcat(sentence, " ");
+        strcat(sentence, command[2]);
+        strcat(sentence, " and succeeded\n");
+        int temp = write(fd, &sentence, strlen(sentence));
         close(fd);
-        //printf("[0][0] is %d\n", p1Board.board[0][0]);
         return 1;
       }
       else{
         printf("Unsuccessful attack :(\n");
         //display("ally", 1, p1Board, p2Board);
         int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT);
-        char sentence[1000] = "It works";
-        // if (currentPlayer == 1){
-        //   strcat(sentence, "Player 1 ");
-        // }
-        // else{
-        //   strcat(sentence, "Player 2 ");
-        // }
-        // strcat(sentence, "attacked ");
-        // strcat(sentence, command[1]);
-        // strcat(sentence, " ");
-        // strcat(sentence, command[2]);
-        // strcat(sentence, " and failed\n");
-        // printf("%s", sentence);
+        char sentence[1000] = "";
+         if (currentPlayer == 1){
+           strcat(sentence, "Player 1 ");
+        }
+        else{
+           strcat(sentence, "Player 2 ");
+        }
+        strcat(sentence, "attacked ");
+        strcat(sentence, command[1]);
+        strcat(sentence, " ");
+        strcat(sentence, command[2]);
+        strcat(sentence, " and failed\n");
         int temp = write(fd, &sentence, strlen(sentence));
-        //printf("Content is: --%s--\n", sentence);
-        //printf("Num is %d\n", temp);
-        //printf("Error is: %s\n", strerror(temp));
         close(fd);
         return 0;
       }
