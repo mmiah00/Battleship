@@ -118,22 +118,40 @@ int main () {
 
 */
 
-struct gameBoard client_board;
+struct gameBoard player1Board;
+struct gameBoard player2Board;
 
 int main(int argc, char **argv) {
 
   int server_socket;
   char buffer[BUFFER_SIZE];
-  client_board.player = 2;
+  int currentPlayer = 2;//player2
 
   if (argc == 2)
     server_socket = client_setup( argv[1]);
   else
     server_socket = client_setup( TEST_IP );
 
+  //place ships
   printf ("Let's place your ships!\n\n");
   placingShips (client_board, 2, 1);
   printf ("Waiting for other player... \n");
+  //i didnt implement ending turns to main and attack but it could go like this idk
+  //send my board to other player
+  //receive other player's board so now both players have the same 2 boards to start with
+
+  //while running is true
+  //  receive boards
+  //  turnended = false
+  //  while turnended is false
+  //    same gameplay while loop content as before
+  //    but int status = executeCommand
+  //    if status == 1 //return 1 from executeCommand when attacking to end turn
+  //      turnended = true//causes turn to end by endng while loop
+  //  close while turnended loop
+  //  check for victory. if victory then running = false and display winning message
+  //  send boards
+  // close while running loop
 
   /*
 

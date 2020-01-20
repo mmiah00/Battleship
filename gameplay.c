@@ -382,7 +382,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         strcat(sentence, " and failed\n");
         int temp = write(fd, &sentence, strlen(sentence));
         close(fd);
-        return 0;
+        return 1;
       }
     }
   }
