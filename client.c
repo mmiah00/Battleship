@@ -21,34 +21,44 @@ int main(int argc, char **argv) {
   placingShips (client_board, 2, 1);
   printf ("Waiting for other player... \n");
 
-  int gameFinished = 0; //0 means not finished
-  int running = 1;
-  while (running) {
-    printf("Awaiting your next command. Type HELP, HISTORY, DISPLAY, or ATTACK: ");
-    fgets(commands, sizeof(commands), stdin);
-    *strchr(commands, '\n') = 0;
-    //write(server_socket, commands, sizeof(commands));
-    char ** args = parse_args (commands);
-    if (strcmp (args[0], "exit") == 0) {
-      running = 0;
-      return 0;
-    }
-    else {
-      if (strcmp (args[0], "attack") == 0) {
-        printf ("Type in coordinates: ");
-        fgets (buffer, sizeof (buffer), stdin);
-        *strchr (buffer, '\n') = 0;
-        write (server_socket, buffer, sizeof (buffer));
-        read (server_socket, buffer, sizeof(buffer));
-        char ** coords = parse_args (buffer);
-        int x = atoi (coords[0]);
-        int y = atoi (coords[1]);
-        attack (x,y, client_board.player, &client_board, &server_board);
-      }
-      else {
-        executeCommand (args, client_board.player, client_board, server_board);
-      }
-    }
+  while (1) {
+    printf("enter data: ");
+    fgets(buffer, sizeof(buffer), stdin);
+    *strchr(buffer, '\n') = 0;
+    write(server_socket, buffer, sizeof(buffer));
+    //Goes Second
+    read(server_socket, buffer, sizeof(buffer));
+    printf("received: [%s]\n", buffer);
+    printf("[client] received: [%s]\n", buffer);
+  }
+  // int gameFinished = 0; //0 means not finished
+  // int running = 1;
+  // while (running) {
+  //   printf("Awaiting your next command. Type HELP, HISTORY, DISPLAY, or ATTACK: ");
+  //   fgets(commands, sizeof(commands), stdin);
+  //   *strchr(commands, '\n') = 0;
+  //   //write(server_socket, commands, sizeof(commands));
+  //   char ** args = parse_args (commands);
+  //   if (strcmp (args[0], "exit") == 0) {
+  //     running = 0;
+  //     return 0;
+  //   }
+  //   else {
+  //     if (strcmp (args[0], "attack") == 0) {
+  //       printf ("Type in coordinates: ");
+  //       fgets (buffer, sizeof (buffer), stdin);
+  //       *strchr (buffer, '\n') = 0;
+  //       write (server_socket, buffer, sizeof (buffer));
+  //       read (server_socket, buffer, sizeof(buffer));
+  //       char ** coords = parse_args (buffer);
+  //       int x = atoi (coords[0]);
+  //       int y = atoi (coords[1]);
+  //       attack (x,y, client_board.player, &client_board, &server_board);
+  //     }
+  //     else {
+  //       executeCommand (args, client_board.player, client_board, server_board);
+  //     }
+  //   }
     //Goes Second
     read(server_socket, buffer, sizeof(buffer));
 
