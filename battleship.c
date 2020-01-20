@@ -362,7 +362,8 @@ int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){//checks 
   }
 }
 
-int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){//calls the gameplay functions
+
+int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, struct gameBoard theirs){//p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){//calls the gameplay functions
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
     printf("...\n");
@@ -374,12 +375,13 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "ally") == 0){
     printf("Displaying your board and ships\n");
-    display("ally", currentPlayer, p1Board, p2Board);
+    display("ally", currentPlayer, mine, theirs);
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "enemy") == 0){
     printf("Displaying enemy's board\n");
-    display("enemy", currentPlayer, p1Board, p2Board);
+    display("enemy", currentPlayer, mine, theirs);
   }
+  /*
   else if (strcmp(command[0], "attack") == 0){
     int xcoord = atoi(command[1]);
     int ycoord = atoi(command[2]);
@@ -388,7 +390,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
     }
     else{
       //int (*pointer2)[8] = p2Board.board;
-      int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
+      int status = attack(ycoord, xcoord, currentPlayer, &mine, &theirs);
       //printf("[0][0] is %d\n", p1Board.board[0][0]);
       if (status == 1){
         printf("Ship found and attacked at this location!\n\n");
@@ -431,6 +433,6 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         return 0;
       }
     }
-  }
+  }*/
   return 0;
 }

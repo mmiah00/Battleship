@@ -1,5 +1,5 @@
 #include "networking.h"
-#include "battleship.h"
+#include "battleship.c"
 /*
 This is the gameplay - You should set it so that client is player 2
 int main () {
@@ -116,16 +116,27 @@ int main () {
 }
 
 */
+
+struct gameBoard server_board;
+struct gameBoard client_board;
+
 int main() {
 
   int listen_socket;
   int client_socket;
+  server_board.player = 1;
+  client_board.player = 2;
+
   char buffer[BUFFER_SIZE];
 
   //set of file descriptors to read from
   fd_set read_fds;
 
   listen_socket = server_setup();
+
+  printf ("Let's place your ships!\n\n");
+  placingShips (server_board, 2, 1);
+  printf ("Waiting for other player... \n");
 
   while (1) {
 
@@ -144,5 +155,5 @@ int main() {
 
     }//end listen_socket select
 
-    read_write(client_socket);
+    read_write(client_socket, &server_board, &client_board);
 }}

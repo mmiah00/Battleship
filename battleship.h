@@ -28,7 +28,7 @@ void exportHistory(char * path);
 
 int finished(struct gameBoard * pointer1, struct gameBoard * pointer2);
 
-int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2);
+int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, struct gameBoard theirs); //p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2);
 
 void placingShips (struct gameBoard g, int shipType, int times);
 

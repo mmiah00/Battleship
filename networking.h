@@ -8,6 +8,7 @@
 #include <netdb.h>
 #include <string.h>
 #include <errno.h>
+#include "battleship.h"
 
 #ifndef NETWORKING_H
 #define NETWORKING_H
@@ -20,7 +21,7 @@ void error_check(int i, char *s);
 int server_setup();
 int server_connect(int sd);
 int client_setup(char * server);
-void read_write(int client_socket);
+void read_write(int client_socket, struct gameBoard *s, struct gameBoard *c);//s = server c = client
 
 
 #endif

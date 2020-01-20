@@ -110,17 +110,22 @@ int client_setup(char * server) {
   return sd;
 }
 
-void read_write(int client_socket) {// This is for the server to process information
+void read_write(int client_socket, struct gameBoard *server, struct gameBoard *client) {// This is for the server to process information
   char buffer[BUFFER_SIZE];
 
   while (1) {
-    printf("enter data: ");
+    printf("Enter coordinates: ");
     fgets(buffer, sizeof(buffer), stdin);
     *strchr(buffer, '\n') = 0;
     //This is what is sent
     // MAKE SERVER GO FIRST THEN ALLOW CLIENT TO GO
     write(client_socket, buffer, sizeof(buffer));
     read(client_socket, buffer, sizeof(buffer));
+    char ** coords = parse_args (buffer);
+    int x = atoi (coords[0]);
+    int y = atoi (coords[1]);
+    attack (x,y, 1, server, client);
+
     // This is where you would process information
 //    printf("[server] received: [%s]\n", buffer);
   }

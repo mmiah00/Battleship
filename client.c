@@ -1,6 +1,5 @@
 #include "networking.h"
 #include "battleship.c"
-
 /*
 This is the gameplay - You should set it so that client is player 2
 int main () {
@@ -118,84 +117,61 @@ int main () {
 
 */
 
-struct gameBoard player1Board;
-struct gameBoard player2Board;
+struct gameBoard client_board;
+struct gameBoard server_board;
 
 int main(int argc, char **argv) {
 
   int server_socket;
   char buffer[BUFFER_SIZE];
-  int currentPlayer = 2;//player2
+  char commands[BUFFER_SIZE];
+  client_board.player = 2;
+  server_board.player = 1;
 
   if (argc == 2)
     server_socket = client_setup( argv[1]);
   else
     server_socket = client_setup( TEST_IP );
 
-  //place ships
   printf ("Let's place your ships!\n\n");
   placingShips (client_board, 2, 1);
   printf ("Waiting for other player... \n");
-  //i didnt implement ending turns to main and attack but it could go like this idk
 
-  //send my board to other player
-  //receive other player's board so now both players have the same 2 boards to start with
-
-  //int gameFinished = 0;//0 is unfinished
-  //char command[1000];
-  //int running = 0;
-  //while (running == 0){
-  //  //receive boards
-  //  int turnEnded = 0;
-  //  while (turnEnded == 0){
-        // gameFinished = finished(pointer1, pointer2);
-        // if (gameFinished == 0){//game is unfinished
-        //   printf("Awaiting your next command:");
-        //   fgets(command, sizeof(command), stdin);
-        //   command[strlen(command) - 1] = '\0';
-        //   char ** args2 = parse_args(command);
-        //   if (strcmp(args2[0], "exit") == 0){
-        //     running = 0;
-        //     return 0;
-        //   }
-        //   else{
-        //     int status = executeCommand(args2, 2, p1, p2, pointer1, pointer2);
-        //     if (status == 1){
-        //       turnEnded = 1;
-        //     }
-        //   }
-        //   //free(args2);
-        // }
-        // else{//game is finished
-        //   if (gameFinished == 1){
-        //     printf("Player 1 wins wooooooooooooooooooo\n\n");
-        //     turnEnded = 1;
-        //     running = 1;
-        //   }
-        //   else{
-        //     printf("Player 2 wins wooooooooooooooooooo\n\n");
-        //     turnEnded = 1;
-        //     running = 1;
-        //   }
-        // }
-  //  }
-  //  send boards
-  //}
-
-  /*
-
-  while (1) {
-    printf("enter data: ");
-    fgets(buffer, sizeof(buffer), stdin);
-    *strchr(buffer, '\n') = 0;
-    write(server_socket, buffer, sizeof(buffer));
+  int gameFinished = 0; //0 means not finished
+  int running = 1;
+  while (running) {
+    printf("Awaiting your next command. Type HELP, HISTORY, DISPLAY, or ATTACK: ");
+    fgets(commands, sizeof(commands), stdin);
+    *strchr(commands, '\n') = 0;
+    //write(server_socket, commands, sizeof(commands));
+    char ** args = parse_args (commands);
+    if (strcmp (args[0], "exit") == 0) {
+      running = 0;
+      return 0;
+    }
+    else {
+      if (strcmp (args[0], "attack") == 0) {
+        printf ("Type in coordinates: ");
+        fgets (buffer, sizeof (buffer), stdin);
+        *strchr (buffer, '\n') = 0;
+        write (server_socket, buffer, sizeof (buffer));
+        read (server_socket, buffer, sizeof(buffer));
+        char ** coords = parse_args (buffer);
+        int x = atoi (coords[0]);
+        int y = atoi (coords[1]);
+        attack (x,y, client_board.player, &client_board, &server_board);
+      }
+      else {
+        executeCommand (args, client_board.player, client_board, server_board);
+      }
+    }
     //Goes Second
     read(server_socket, buffer, sizeof(buffer));
+
     // This is where they process info and add it to the invisible board
     // Maisha this is where we would have the gameplay lol
 
 //    printf("received: [%s]\n", buffer);
 //    printf("[client] received: [%s]\n", buffer);
   }
-  */
 }
