@@ -137,21 +137,50 @@ int main(int argc, char **argv) {
   placingShips (client_board, 2, 1);
   printf ("Waiting for other player... \n");
   //i didnt implement ending turns to main and attack but it could go like this idk
+
   //send my board to other player
   //receive other player's board so now both players have the same 2 boards to start with
 
-  //while running is true
-  //  receive boards
-  //  turnended = false
-  //  while turnended is false
-  //    same gameplay while loop content as before
-  //    but int status = executeCommand
-  //    if status == 1 //return 1 from executeCommand when attacking to end turn
-  //      turnended = true//causes turn to end by endng while loop
-  //  close while turnended loop
-  //  check for victory. if victory then running = false and display winning message
+  //int gameFinished = 0;//0 is unfinished
+  //char command[1000];
+  //int running = 0;
+  //while (running == 0){
+  //  //receive boards
+  //  int turnEnded = 0;
+  //  while (turnEnded == 0){
+        // gameFinished = finished(pointer1, pointer2);
+        // if (gameFinished == 0){//game is unfinished
+        //   printf("Awaiting your next command:");
+        //   fgets(command, sizeof(command), stdin);
+        //   command[strlen(command) - 1] = '\0';
+        //   char ** args2 = parse_args(command);
+        //   if (strcmp(args2[0], "exit") == 0){
+        //     running = 0;
+        //     return 0;
+        //   }
+        //   else{
+        //     int status = executeCommand(args2, 2, p1, p2, pointer1, pointer2);
+        //     if (status == 1){
+        //       turnEnded = 1;
+        //     }
+        //   }
+        //   //free(args2);
+        // }
+        // else{//game is finished
+        //   if (gameFinished == 1){
+        //     printf("Player 1 wins wooooooooooooooooooo\n\n");
+        //     turnEnded = 1;
+        //     running = 1;
+        //   }
+        //   else{
+        //     printf("Player 2 wins wooooooooooooooooooo\n\n");
+        //     turnEnded = 1;
+        //     running = 1;
+        //   }
+        // }
+  //  }
   //  send boards
-  // close while running loop
+  //}
 
   /*
 
