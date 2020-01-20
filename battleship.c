@@ -32,6 +32,62 @@ void introscreen () { //thank you patorjk.com for the ASCII art
   printf ("\n\n");
 }
 
+void placingShips (struct gameBoard g, int shipType, int times) {
+  if (shipType < 6) {
+    printf("PLACING A SIZE %d SHIP\n", shipType);
+    char input [1000]; //should only be x_y
+    char orientation [strlen("horizontal")];
+
+    printf ("   What are your coordinates? ", shipType);
+    fgets (input, sizeof (input), stdin);
+    *strchr(input, '\n') = 0;
+    char ** coords = parse_args (input);
+
+    int x, y;
+    x = atoi (coords[0]);
+    y = atoi (coords[1]);
+
+    printf ("   Please type 'v' for VERTICAL or 'h' for HORIZONTAL: ");
+    fgets (orientation, sizeof (orientation), stdin);
+    *strchr(orientation, '\n') = 0;
+    char ** o = parse_args (orientation);
+
+    printf ("\n");
+
+    if (placeShip (x, y, shipType, o[0], g.board, &g) == 1) {
+      display_my_board (g);
+      if (shipType == 3 && times == 1) {
+        placingShips (g, shipType, times + 1);
+      }
+      else {
+        placingShips (g, shipType + 1, times);
+      }
+    }
+    else {
+      placingShips (g, shipType, times);
+    }
+  }
+
+}
+
+void display_my_board (struct gameBoard g){
+  printf ("      0 1 2 3 4 5 6 7\n\n");
+  int r,c;
+  for (int r = 0; r < 8; r++){
+  printf("   %d  ", r);
+    for (int c = 0; c < 8; c++){
+      if (g.board[r][c] == 0){//0 represents water
+        printf("~ ");//water
+      }
+      if (g.board[r][c] == 1){//1 represents a ship
+        printf("H ");//ship
+      }
+    }
+    printf("\n");
+  }
+  printf("\n");
+}
+
 char ** parse_args( char * line ){//parsing command args
   char ** var = malloc(sizeof(char *) * 5);
   int size;
