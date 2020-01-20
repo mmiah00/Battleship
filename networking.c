@@ -118,10 +118,11 @@ void read_write(int client_socket) {// This is for the server to process informa
     fgets(buffer, sizeof(buffer), stdin);
     *strchr(buffer, '\n') = 0;
     //This is what is sent
+    // MAKE SERVER GO FIRST THEN ALLOW CLIENT TO GO
     write(client_socket, buffer, sizeof(buffer));
     read(client_socket, buffer, sizeof(buffer));
     // This is where you would process information
-    printf("[server] received: [%s]\n", buffer);
+//    printf("[server] received: [%s]\n", buffer);
   }
   close(client_socket);
 

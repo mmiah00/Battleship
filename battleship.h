@@ -8,21 +8,24 @@
 #include <sys/ipc.h>
 #include <fcntl.h>
 #include <unistd.h>
-
-void introscreen ();
+#include <sys/wait.h>
 
 struct gameBoard;
 
-struct coordinate;
-
-
-int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] );
-int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8]);
-
-int display(char * status, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board);
-
-int attack(int xcoord, int ycoord, int currentPlayer,int p1Board[8][8],int p2Board[8][8]);
-
-int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board);
+void introscreen ();
 
 char ** parse_args( char * line );
+
+int isValid(int xcoord, int ycoord, int shipSize, char * HorV, int board[8][8] );
+
+int placeShip(int xcoord, int ycoord, int shipType, char * HorV, int board[8][8], struct gameBoard * pointer);
+
+int attack(int xcoord, int ycoord, int currentPlayer,struct gameBoard * p1Board, struct gameBoard * p2Board);
+int display(char * status, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board);
+int displayHistory();
+
+void exportHistory(char * path);
+
+int finished(struct gameBoard * pointer1, struct gameBoard * pointer2);
+
+int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2);

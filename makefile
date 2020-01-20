@@ -24,6 +24,9 @@ battleship.o: battleship.c battleship.h
 secondarymain.o: secondarymain.c networking.h battleship.h
 				gcc -c secondarymain.c
 
+run:
+	./secondarymain
+
 clean:
 	rm server
 	rm client
