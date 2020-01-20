@@ -345,7 +345,7 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
       int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
       //printf("[0][0] is %d\n", p1Board.board[0][0]);
       if (status == 1){
-        printf("Ship found and attacked at this location!\n\n");
+        printf("Ship found and attacked at this location!\n");
         //display("ally", 1, p1Board, p2Board);
         int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
         char sentence[1000] = "";
@@ -365,9 +365,9 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
         return 1;
       }
       else{
-        printf("Unsuccessful attack :(\n\n");
+        printf("Unsuccessful attack :(\n");
         //display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT);
+        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
         char sentence[1000] = "";
          if (currentPlayer == 1){
            strcat(sentence, "Player 1 ");

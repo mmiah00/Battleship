@@ -14,7 +14,6 @@
 int main () {
   introscreen ();
 
-  int running = 1;
 
   struct gameBoard p1;
   struct gameBoard *pointer1 = &p1;
@@ -53,11 +52,11 @@ int main () {
       int shipType = atoi(args[3]);
       //command is "$place xcoord ycoord shiptype verticalorhorizontal"
       if (placeShip(ycoord, xcoord, shipType, args[4], p1.board, pointer1) == 0){ //p2.board if the current player is player 2
-        printf("Ship placed unsuccessfully. Try again :(\n\n");
+        printf("Ship placed unsuccessfully. Try again :(\n");
         display("ally", 1, p1, p2);
       }
       else{
-        printf("Ship placed successfully :)\n\n");
+        printf("Ship placed successfully :)\n");
         display("ally", 1, p1, p2);
         if (shipType == 1){
           //printf("runned\n");
@@ -85,34 +84,47 @@ int main () {
   //gameplay commands
     int gameFinished = 0;//0 is unfinished
     char command[1000];
-    while (running){
-      gameFinished = finished(pointer1, pointer2);
-      if (gameFinished == 0){//game is unfinished
-        printf("Awaiting your next command:");
-        fgets(command, sizeof(command), stdin);
-        command[strlen(command) - 1] = '\0';
-        char ** args2 = parse_args(command);
-        if (strcmp(args2[0], "exit") == 0){
-          running = 0;
-          return 0;
+    int running = 1; //true
+    int turnEnded = 0; //false
+    while (running == 1){
+      printf("Receiving data from other player\n");
+      turnEnded = 0;
+      while (turnEnded == 0){
+        gameFinished = finished(pointer1, pointer2);
+        if (gameFinished == 0){//game is unfinished
+          printf("Awaiting your next command:");
+          fgets(command, sizeof(command), stdin);
+          command[strlen(command) - 1] = '\0';
+          char ** args2 = parse_args(command);
+          if (strcmp(args2[0], "exit") == 0){
+            running = 0;
+            turnEnded = 1;
+            return 0;
+          }
+          else{
+            int status = executeCommand(args2, 2, p1, p2, pointer1, pointer2);
+            if (status == 1){
+              turnEnded = 1;
+              printf("Your turn ended\n");
+            }
+          }
+          //free(args2);
         }
         else{
-          executeCommand(args2, 2, p1, p2, pointer1, pointer2);
-        }
-        //free(args2);
-      }
-      else{
-        if (gameFinished == 1){
-          printf("Player 1 wins wooooooooooooooooooo\n\n");
-          running = 0;
-        }
-        else{
-          printf("Player 2 wins wooooooooooooooooooo\n\n");
-          running = 0;
+          if (gameFinished == 1){
+            printf("Player 1 wins wooooooooooooooooooo\n\n");
+            turnEnded = 1;
+            running = 0;
+          }
+          else{
+            printf("Player 2 wins wooooooooooooooooooo\n\n");
+            turnEnded = 1;
+            running = 0;
+          }
         }
       }
+      printf("Sending data to other player\n\n");
     }
-
     //while (exported == 0){//only stops if history.txt is sent somewhere
     printf("Where do you want to export the history file?\nEnter . to leave it here:");
     char stuff[1000];
