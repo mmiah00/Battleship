@@ -68,6 +68,7 @@ int server_connect(int sd) {
   sock_size = sizeof(client_address);
   client_socket = accept(sd, (struct sockaddr *)&client_address, &sock_size);
   error_check(client_socket, "server accept");
+  printf ("You are connected\n\n");
 
   return client_socket;
 }
@@ -103,6 +104,7 @@ int client_setup(char * server) {
   //connect will bind the socket for us
   i = connect( sd, results->ai_addr, results->ai_addrlen );
   error_check( i, "client connect" );
+  printf ("You are connected\n\n");
 
   free(hints);
   freeaddrinfo(results);
@@ -121,10 +123,11 @@ void read_write(int client_socket, struct gameBoard *server, struct gameBoard *c
     // MAKE SERVER GO FIRST THEN ALLOW CLIENT TO GO
     write(client_socket, buffer, sizeof(buffer));
     read(client_socket, buffer, sizeof(buffer));
-    char ** coords = parse_args (buffer);
-    int x = atoi (coords[0]);
-    int y = atoi (coords[1]);
-    attack (x,y, 1, server, client);
+
+    // char ** coords = parse_args (buffer);
+    // int x = atoi (coords[0]);
+    // int y = atoi (coords[1]);
+    // attack (x,y, 1, server, client);
 
     // This is where you would process information
 //    printf("[server] received: [%s]\n", buffer);
