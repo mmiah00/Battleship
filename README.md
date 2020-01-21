@@ -17,5 +17,6 @@ In order to run the nonetworking version of the game, you must type './nonetwork
 
 ## Other information
 ### Bugs
-Exporting isn't quite there yet. When entering '.' or '..' to export history file, it instead gets content copied or renamed to a file called '.'
-or '..' as a dot file.
+Exporting isn't quite there yet. When entering '.' or '..' to export history file, it instead gets content copied or renamed to a file called '.' or '..' as a dot file.
+
+Ssh doesn't allow for git cloning and times out, so we made the networking locally as a result with port = 9001 and Test_IP = 127.0.0.1. 
