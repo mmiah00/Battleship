@@ -9,7 +9,8 @@ This project is a terminal-based version of Battleship the board game. Battleshi
 ## Required Libraries
 
 ## Instructions
-After running make, there will be two primary executables. You could run ./battleship for the version that includes networking. In case networking isn't 100% functional yet so there will be a backup ./nonetworking to demonstrate other gameplay components other than networking. In nonetworking, you place ships as player 1 but attack and win as player 2. Instructions to play the game will be displayed or displayed when entered 'help'.
+After running make, there will be two primary executables. You could run ./battleship for the version that includes networking. In case networking isn't 100% functional yet so there will be a backup ./nonetworking to demonstrate other gameplay components other than networking. In nonetworking, you place ships as player 1 but attack and win as player 2. Instructions to play the game will be displayed
+automatically or displayed when entered 'help'.
 
 ## Other information
 ### Bugs
