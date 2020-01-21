@@ -2,7 +2,7 @@ Maisha Miah, Bryan Monge Serrano, Brandon Chen
 
 
 chenB 2020-1-13 22:58
-Wrote basic data structure and initilization. Wrote code for ship placements. Wrote display board.
+Wrote basic data structure and initialization. Wrote code for ship placements. Wrote display board.
 
 chenB 2020-1-14 16:21
 Added command input and parse args. Fixed placement of ships a couple of times. Started attack command but untested.
@@ -22,3 +22,44 @@ ship placement bug. Worked on exporting history.txt after game ends. Almost all 
 
 chenB 2020-18 16:00
 Added turn change. Fixed writing to file permissions.
+
+*************************************************************************
+miahM 2020-1-5 17:10
+Wrote intro screen, helped with planning outline.
+
+miahM 2020-1-7 16:48
+Worked in client.c and server.c to customize it to our game.
+
+miahM 2020-1-9 18:00
+Worked in client file to receive coordinates a user write and packages it into struct coordinates
+
+miahM 2020-1-10 11:35
+Helped Brandon write basic commands for the game (attack, view board, etc)
+
+miahM 2020-1-14 16:39
+Helped with debugging placement and interpreting incoming data.
+
+miahM 2020-1-18 14:56
+Finalizing work on networking code. Worked on receiving and interpreting data.
+
+miahM 2020-1-20
+Receives and sends attacks. Worked on implementing other gameplay.
+
+*************************************************************************
+monge-SerranoB 2020-1-5 11:57
+Worked on outlining how networking should connect.
+
+monge-SerranoB 2020-1-8 16:32
+Helped write basic commands. Read through client and server files to understand the connection.
+
+monge-SerranoB 2020-1-13 18:23
+Got connection set up, working on sending and packaging data that is sent and received.
+
+monge-SerranoB 2020-1-15 14:51
+Worked on debugging code in battleship.c.
+
+monge-SerranoB 2020-1-18 12:40
+Almost finalizing networking code. Working on interpreting data.
+
+monge-SerranoB 2020-1-20 13:27
+Managed to runs basic functions of battleship, including sending and receiving an attack. 
