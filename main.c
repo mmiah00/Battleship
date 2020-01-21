@@ -78,7 +78,7 @@ int main () {
         }
       }
     }
-    //free(args);
+    free(args);
   }
 
   //gameplay commands
@@ -108,7 +108,7 @@ int main () {
               printf("Your turn ended\n");
             }
           }
-          //free(args2);
+          free(args2);
         }
         else{
           if (gameFinished == 1){
