@@ -59,6 +59,7 @@ int main() {
   }
   free(s_msg);
 
+  system("clear");
 
   // ------------------------------------------------------------------------
   // Game starts
@@ -166,5 +167,7 @@ while(1) {
     free(s_msg);
     system("clear");
 }
+system("clear");
+
 }
 //}
