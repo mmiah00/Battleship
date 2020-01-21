@@ -1,0 +1,24 @@
+Maisha Miah, Bryan Monge Serrano, Brandon Chen
+
+
+chenB 2020-1-13 22:58
+Wrote basic data structure and initilization. Wrote code for ship placements. Wrote display board.
+
+chenB 2020-1-14 16:21
+Added command input and parse args. Fixed placement of ships a couple of times. Started attack command but untested.
+
+chenB 2020-1-15 22-56
+Fixed attack and wrote code to write to history.txt when attacking.
+
+chenB 2020-16 22:58
+Working on writing to history.txt but bad file descriptor.
+
+chenB 2020-17 16:42
+Fixed writing to file. Fixed error where attacking isn't saved on the board.
+
+chenB 2020-18 16:24
+Improved display look. Wrote display history by catting file. Wrote function to check if a player won. Fixed overlapping
+ship placement bug. Worked on exporting history.txt after game ends. Almost all gameplay functions are functional.
+
+chenB 2020-18 16:00
+Added turn change. Fixed writing to file permissions.
