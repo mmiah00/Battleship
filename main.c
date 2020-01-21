@@ -40,7 +40,7 @@ int main () {
   int ship4placed = 0; //four coords long
   int ship5placed = 0; //five coords long
   char input[1000];
-  printf("The command for placing a ship is 'place x y 1-5 HorV\n'");
+  printf("The command for placing a ship is 'place x y 1-5 HorV'\n");
   printf("Ex:place 0 0 1 h\n");
   while (ship1placed == 0 || ship2placed == 0 || ship3placed == 0 || ship4placed == 0 || ship5placed == 0){//only continues to gameplay if all ships are placed
     printf("Please place your ships to continue:");
