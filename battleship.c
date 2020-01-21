@@ -49,43 +49,6 @@ void introscreen () { //thank you patorjk.com for the ASCII art
   printf ("\n\n");
 }
 
-void placingShips (struct gameBoard g, int shipType, int times) {
-  if (shipType < 6) {
-    printf("PLACING A SIZE %d SHIP\n", shipType);
-    char input [1000]; //should only be x_y
-    char orientation [strlen("horizontal")];
-
-    printf ("   What are your coordinates? ", shipType);
-    fgets (input, sizeof (input), stdin);
-    *strchr(input, '\n') = 0;
-    char ** coords = parse_args (input);
-
-    int x, y;
-    x = atoi (coords[0]);
-    y = atoi (coords[1]);
-
-    printf ("   Please type 'v' for VERTICAL or 'h' for HORIZONTAL: ");
-    fgets (orientation, sizeof (orientation), stdin);
-    *strchr(orientation, '\n') = 0;
-    char ** o = parse_args (orientation);
-
-    printf ("\n");
-
-    if (placeShip (x, y, shipType, o[0], g.board, &g) == 1) {
-      display_my_board (g);
-      if (shipType == 3 && times == 1) {
-        placingShips (g, shipType, times + 1);
-      }
-      else {
-        placingShips (g, shipType + 1, times);
-      }
-    }
-    else {
-      placingShips (g, shipType, times);
-    }
-  }
-
-}
 
 void display_my_board (struct gameBoard g){
   printf ("      0 1 2 3 4 5 6 7\n\n");
@@ -98,6 +61,12 @@ void display_my_board (struct gameBoard g){
       }
       if (g.board[r][c] == 1){//1 represents a ship
         printf("H ");//ship
+      }
+      if (g.board[r][c] == 2){//2 represents a successful hit by the enemy
+        printf("O ");//hit
+      }
+      if (g.board[r][c] == 3){//3 represents a missed hit by the enemy
+        printf("X ");//miss
       }
     }
     printf("\n");
@@ -228,97 +197,21 @@ int attack(int xcoord, int ycoord, int currentPlayer,struct gameBoard * p1Board,
 int display(char * status, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board){//displays a board based on given args
   if (strcmp(status, "ally") == 0){//display your board
     if (currentPlayer == 1){//if player 1 display p1Board
-      printf("   0 1 2 3 4 5 6 7\n\n");
-      for (int r = 0; r < 8; r++){
-      printf("%d  ", r);
-        for (int c = 0; c < 8; c++){
-          if (p1Board.board[r][c] == 0){//0 represents water
-            printf("~ ");//water
-          }
-          if (p1Board.board[r][c] == 1){//1 represents a ship
-            printf("H ");//ship
-          }
-          if (p1Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O ");//hit
-          }
-          if (p1Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X ");//miss
-          }
-        }
-        printf("\n");
-      }
-      printf("\n");
+      display_my_board(p1Board);
       return 1;
     }
     else{//if player 2 display p2Board
-      printf("   0 1 2 3 4 5 6 7\n\n");
-      for (int r = 0; r < 8; r++){
-      printf("%d  ", r);
-        for (int c = 0; c < 8; c++){
-          if (p2Board.board[r][c] == 0){//0 represents water
-            printf("~ ");//water
-          }
-          if (p2Board.board[r][c] == 1){//1 represents a ship
-            printf("H ");//ship
-          }
-          if (p2Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O ");//hit
-          }
-          if (p2Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X ");//miss
-          }
-        }
-        printf("\n");
-      }
-      printf("\n");
+      display_my_board(p2Board);
       return 1;
     }
   }
   else if (strcmp(status, "enemy") == 0){//display enemy board
     if (currentPlayer == 1){//if player 1 display p2Board
-      printf("   0 1 2 3 4 5 6 7\n\n");
-      for (int r = 0; r < 8; r++){
-      printf("%d  ", r);
-        for (int c = 0; c < 8; c++){
-          if (p2Board.board[r][c] == 0){//0 represents water
-            printf("~ ");//water
-          }
-          if (p2Board.board[r][c] == 1){//1 represents a ship but you can't see enemy ships
-            printf("~ ");//hidden ship
-          }
-          if (p2Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O ");//hit
-          }
-          if (p2Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X ");//miss
-          }
-        }
-        printf("\n");
-      }
-      printf("\n");
+      display_my_board(p2Board);
       return 1;
     }
     else{//if player 2 display p1Board
-      printf("   0 1 2 3 4 5 6 7\n\n");
-      for (int r = 0; r < 8; r++){
-      printf("%d  ", r);
-        for (int c = 0; c < 8; c++){
-          if (p1Board.board[r][c] == 0){//0 represents water
-            printf("~ ");//water
-          }
-          if (p1Board.board[r][c] == 1){//1 represents a ship but you can't see enemy ships
-            printf("~ ");//hidden ship
-          }
-          if (p1Board.board[r][c] == 2){//2 represents a successful hit by the enemy
-            printf("O ");//hit
-          }
-          if (p1Board.board[r][c] == 3){//3 represents a missed hit by the enemy
-            printf("X ");//miss
-          }
-        }
-        printf("\n");
-      }
-      printf("\n");
+      display_my_board(p1Board);
       return 1;
     }
   }
@@ -367,7 +260,6 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
     printf("...\n");
-    printf("To attack type 'attack x y'. Ex:attack 4 4\n");
     printf("To display a board type 'display enemyOrAlly'. Ex:display ally\n");
     printf("To see game history type 'history'\n\n");
   }
@@ -383,58 +275,6 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "enemy") == 0){
     printf("Displaying enemy's board\n");
     display("enemy", currentPlayer, p1Board, p2Board);
-  }
-  else if (strcmp(command[0], "attack") == 0){
-    int xcoord = atoi(command[1]);
-    int ycoord = atoi(command[2]);
-    if (xcoord > 7 || xcoord < 0 || ycoord > 7 || ycoord < 0){
-      return 0;
-    }
-    else{
-      //int (*pointer2)[8] = p2Board.board;
-      int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
-      //printf("[0][0] is %d\n", p1Board.board[0][0]);
-      if (status == 1){
-        printf("Ship found and attacked at this location!\n");
-        //display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
-        char sentence[1000] = "";
-         if (currentPlayer == 1){
-           strcat(sentence, "Player 1 ");
-        }
-        else{
-           strcat(sentence, "Player 2 ");
-        }
-        strcat(sentence, "attacked ");
-        strcat(sentence, command[1]);
-        strcat(sentence, " ");
-        strcat(sentence, command[2]);
-        strcat(sentence, " and succeeded\n");
-        int temp = write(fd, &sentence, strlen(sentence));
-        close(fd);
-        return 1;
-      }
-      else{
-        printf("Unsuccessful attack :(\n");
-        //display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
-        char sentence[1000] = "";
-         if (currentPlayer == 1){
-           strcat(sentence, "Player 1 ");
-        }
-        else{
-           strcat(sentence, "Player 2 ");
-        }
-        strcat(sentence, "attacked ");
-        strcat(sentence, command[1]);
-        strcat(sentence, " ");
-        strcat(sentence, command[2]);
-        strcat(sentence, " and failed\n");
-        int temp = write(fd, &sentence, strlen(sentence));
-        close(fd);
-        return 1;
-      }
-    }
   }
   return 0;
 }
