@@ -88,8 +88,9 @@ while(1) {
 
     char input [1000];                          // printf("x: ");
     printf("Your turn to attack\n");            // scanf("%i", &x);
-    printf ("Type in your coordinates: ");      // printf("y: ");
-    fgets (input, sizeof (input), stdin);       // scanf("%i", &y);
+    printf ("Type in your coordinates or command: ");      // printf("y: ");
+    fgets (input, sizeof (input), stdin);
+    // HERE is where you would implement commands
     char ** cords = parse_args (input);
 
     // Send attack (VIA COORS)

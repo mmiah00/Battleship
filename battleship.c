@@ -367,6 +367,9 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board,
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
     printf("...\n");
+    printf("To attack type 'attack x y'. Ex:attack 4 4\n");
+    printf("To display a board type 'display enemyOrAlly'. Ex:display ally\n");
+    printf("To see game history type 'history'\n\n");
   }
   else if (strcmp(command[0], "history") == 0){
     printf("Displaying game history:\n");
