@@ -63,3 +63,6 @@ Almost finalizing networking code. Working on interpreting data.
 
 monge-SerranoB 2020-1-20 13:27
 Managed to runs basic functions of battleship, including sending and receiving an attack. 
+
+monge-SerranoB 2020-1-21 08:15
+Implemented the executecommands function.
