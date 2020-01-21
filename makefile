@@ -39,6 +39,7 @@ clean:
 	rm client
 	rm secondarymain
 	rm battleship
+	rm nonetworking
 	rm *.o
 	rm *~
 	rm ./

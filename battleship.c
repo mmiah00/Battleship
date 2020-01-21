@@ -1,9 +1,26 @@
 #include "battleship.h"
 
+struct coordinate {
+  int x,y;
+};
+
 struct gameBoard{
   int player; //board of the specified player
   int board[8][8]; //ships only be visible to the owner of this board. otherwise it will look like an empty spot
 };
+
+struct status_message
+{
+    int type;
+    /* 0 = MISS
+     * 1 = HIT
+     * 2 = OK
+     * 3 = FINISH
+     */
+    int response;
+
+};
+
 
 void introscreen () { //thank you patorjk.com for the ASCII art
   printf ("██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗    ████████╗ ██████╗     \n");
@@ -334,36 +351,19 @@ void exportHistory(char * path){//exports the history.txt to the specified path 
   }
 }
 
-int finished(struct gameBoard * pointer1, struct gameBoard * pointer2){//checks if the game is finish by checking the board and returns winning player
-  int player1Finished = 2;//2 is finish ; game is finished unless proven otherwise under
-  for (int r = 0; r < 8; r++){
-    for (int c = 0; c < 8; c++){
-      if (pointer2->board[c][r] == 1){//1 is a ship that hasnt been found yet
-        player1Finished = 0;//player 1 isnt finished because there is a ship that hasnt been found
-        return player1Finished;
-      }
-    }
-  }
+int finished(struct gameBoard * pointer){//checks if the game is finish by checking the board and returns winning player
+  int i, j;
 
-  int player2Finished = 1;
-  for (int a = 0; a < 8; a++){
-    for (int b = 0; b < 8; b++){
-      if (pointer1->board[b][a] == 1){
-        player2Finished = 0;
-        return player2Finished;
-      }
-    }
-  }
-  if (player1Finished == 2){//player1's board has no more unfound ships so player 2 wins meaning we return 2 for player 2
-    return player1Finished;
-  }
-  else{
-    return player2Finished;
-  }
+  for(i=0; i<8; i++)
+    for(j=0; j<8; j++)
+        if (pointer->board[i][j] == 1) //Found ship
+            return 1;
+
+            return 0;
 }
 
 
-int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, struct gameBoard theirs){//p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){//calls the gameplay functions
+int executeCommand(char ** command, int currentPlayer, struct gameBoard p1Board, struct gameBoard p2Board, struct gameBoard *pointer1, struct gameBoard * pointer2){//calls the gameplay functions
   if (strcmp(command[0], "help") == 0){
     printf("Instructions\n");
     printf("...\n");
@@ -375,13 +375,12 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, st
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "ally") == 0){
     printf("Displaying your board and ships\n");
-    display("ally", currentPlayer, mine, theirs);
+    display("ally", currentPlayer, p1Board, p2Board);
   }
   else if (strcmp(command[0], "display") == 0 && strcmp(command[1], "enemy") == 0){
     printf("Displaying enemy's board\n");
-    display("enemy", currentPlayer, mine, theirs);
+    display("enemy", currentPlayer, p1Board, p2Board);
   }
-  /*
   else if (strcmp(command[0], "attack") == 0){
     int xcoord = atoi(command[1]);
     int ycoord = atoi(command[2]);
@@ -390,10 +389,10 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, st
     }
     else{
       //int (*pointer2)[8] = p2Board.board;
-      int status = attack(ycoord, xcoord, currentPlayer, &mine, &theirs);
+      int status = attack(ycoord, xcoord, currentPlayer, pointer1, pointer2);
       //printf("[0][0] is %d\n", p1Board.board[0][0]);
       if (status == 1){
-        printf("Ship found and attacked at this location!\n\n");
+        printf("Ship found and attacked at this location!\n");
         //display("ally", 1, p1Board, p2Board);
         int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
         char sentence[1000] = "";
@@ -413,9 +412,9 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, st
         return 1;
       }
       else{
-        printf("Unsuccessful attack :(\n\n");
+        printf("Unsuccessful attack :(\n");
         //display("ally", 1, p1Board, p2Board);
-        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT);
+        int fd = open("history.txt", O_APPEND | O_WRONLY | O_CREAT, 0644);
         char sentence[1000] = "";
          if (currentPlayer == 1){
            strcat(sentence, "Player 1 ");
@@ -430,9 +429,9 @@ int executeCommand(char ** command, int currentPlayer, struct gameBoard mine, st
         strcat(sentence, " and failed\n");
         int temp = write(fd, &sentence, strlen(sentence));
         close(fd);
-        return 0;
+        return 1;
       }
     }
-  }*/
+  }
   return 0;
 }

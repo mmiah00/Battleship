@@ -5,7 +5,6 @@
 // You should grab the IP Address of the computer and store it like where we want to run them
 // Ask the chat which are the ones we want to get or how to get the IP Addresses
 int main(){
-  //choose which program to run
   introscreen();
   char input[1000];
   while (1){
@@ -29,6 +28,4 @@ int main(){
       printf("Please type server or client. Try again :(\n");
     }
   }
-  //Ask where you want to establish a connection or create connection and fgets
-  // Run the server or client program
 }
