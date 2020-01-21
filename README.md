@@ -9,8 +9,7 @@ This project is a terminal-based version of Battleship the board game. Battleshi
 ## Required Libraries
 
 ## Instructions
-After running make, there will be two primary executables. You could run ./battleship for the version that includes networking. In case networking isn't 100% functional yet so there will be a backup ./nonetworking to demonstrate other gameplay components other than networking. In nonetworking, you place ships as player 1 but attack and win as player 2. Instructions to play the game will be displayed
-automatically or displayed when entered 'help'.
+After running make run, you will be welcomed by the introscreen, which will ask you to set up the game either as a client or a server. There must be one client and one server, and the server must connect first. Then you will be told to place your ships by first typing in the coordinates then either 'h' for horizontal or 'v' for vertical. After both players are done placing their ships, the game will start and will continue on a turn basis. Each player will choose the coordinates they want to attack and runs until a player has attacked each of the other player's ships. 
 
 ## Other information
 ### Bugs
