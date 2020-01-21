@@ -13,5 +13,5 @@ After running make, there will be two primary executables. You could run ./battl
 
 ## Other information
 ### Bugs
-Exporting isn't quite there yet. When entering '.' or '..' to export history file, it instead gets copied or renamed to a file called '.'
+Exporting isn't quite there yet. When entering '.' or '..' to export history file, it instead gets content copied or renamed to a file called '.'
 or '..' as a dot file.
