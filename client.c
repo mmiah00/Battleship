@@ -92,10 +92,10 @@ int main(int argc, char **argv) {
   printf("\nShips ready!\n");
   // ------------------------------------------------------------------------
 
-  s_msg = malloc(sizeof(s_msg));
+  s_msg = malloc(sizeof(struct status_message));
   s_msg->type = 3;
   s_msg->response = 2;
-  send(server_socket, s_msg, sizeof(s_msg), 0);
+  send(server_socket, s_msg, sizeof(struct status_message), 0);
   free(s_msg);
 
 
@@ -116,11 +116,11 @@ while(1)
         // Receive attack
         printf("Waiting for an attack\n");
         //CAN put executeCommand
-        cor = malloc(sizeof(cor));
-        recv(server_socket, cor, sizeof(cor), 0);
+        cor = malloc(sizeof(struct coordinate));
+        recv(server_socket, cor, sizeof(struct coordinate), 0);
 
         // Send response
-        s_msg = malloc(sizeof(s_msg));
+        s_msg = malloc(sizeof(struct status_message));
         s_msg->type = 3;
         // SERVER ATTACKS
         if (attack(cor->x, cor->y, 1 , pointer1, pointer2) == 1) // if hit
@@ -128,7 +128,7 @@ while(1)
             if (finished(pointer2) == 0) // Check for win conditions here
             {
                 s_msg->response = 3; // This means lost
-                send(server_socket, s_msg, sizeof(s_msg), 0);
+                send(server_socket, s_msg, sizeof(struct status_message), 0);
                 free(cor);
                 free(s_msg);
                 system("clear");
@@ -150,7 +150,7 @@ while(1)
             s_msg->response = 0; // This means miss
         }
 
-        send(server_socket, s_msg, sizeof(s_msg), 0); //send to the server
+        send(server_socket, s_msg, sizeof(struct status_message), 0); //send to the server
         free(cor);
         free(s_msg);
 
@@ -196,17 +196,17 @@ printf("DISPLAYING THEIR BOARD\n");
       }
 
         // Send attack (VIA COORS)
-        cor = malloc(sizeof(cor));
+        cor = malloc(sizeof(struct coordinate));
         cor->x = atoi (cords[0]);
         r = atoi (cords[0]);
         cor->y = atoi (cords[1]);
         c = atoi (cords[1]);
-        send(server_socket, cor, sizeof(cor), 0);
+        send(server_socket, cor, sizeof(struct coordinate), 0);
         free(cor);
 
         // Get response (CHECKS if won)
-        s_msg = malloc(sizeof(s_msg));
-        recv(server_socket, s_msg, sizeof(s_msg), 0);
+        s_msg = malloc(sizeof(struct status_message));
+        recv(server_socket, s_msg, sizeof(struct status_message), 0);
 
         switch (s_msg->response)
         // This is where we find out if the coordinates hit a ship

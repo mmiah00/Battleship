@@ -103,9 +103,9 @@ int main() {
 
   printf ("Waiting for other player... \n");
 
-  s_msg = malloc(sizeof(s_msg));
+  s_msg = malloc(sizeof(struct status_message));
 
-  recv(client_socket, s_msg, sizeof(s_msg), 0);
+  recv(client_socket, s_msg, sizeof(struct status_message), 0);
 
   if (s_msg->response != 2)
   {
@@ -159,17 +159,17 @@ display_my_board(client_board);
   }
 
     // Send attack (VIA COORS)
-    cor = malloc(sizeof(cor));
+    cor = malloc(sizeof(struct coordinate));
     cor->x = atoi (cords[0]);
     r = atoi (cords[0]);
     cor->y = atoi (cords[1]);
     c = atoi (cords[1]);
-    send(client_socket, cor, sizeof(cor), 0);
+    send(client_socket, cor, sizeof(struct coordinate), 0);
     free(cor);
 
     // Get response (CHECKS if won)
     s_msg = malloc(sizeof(s_msg));
-    recv(client_socket, s_msg, sizeof(s_msg), 0);
+    recv(client_socket, s_msg, sizeof(struct status_message), 0);
 
     switch (s_msg->response)
     // This is where we find out if the coordinates hit a ship
@@ -206,11 +206,11 @@ display_my_board(client_board);
     display_my_board(client_board);
     // Receive attack
     printf("Waiting for an attack\n");
-    cor = malloc(sizeof(cor));
-    recv(client_socket, cor, sizeof(cor), 0);
+    cor = malloc(sizeof(struct coordinate));
+    recv(client_socket, cor, sizeof(struct coordinate), 0);
 
     // Send response
-    s_msg = malloc(sizeof(s_msg));
+    s_msg = malloc(sizeof(struct status_message));
     s_msg->type = 3;
 
     if (attack(cor->x, cor->y, 2, pointer1, pointer2) == 1) // if hit
@@ -218,7 +218,7 @@ display_my_board(client_board);
         if (finished(pointer1) == 0) // Check for win conditions here
         {
             s_msg->response = 3; // This means lost
-            send(client_socket, s_msg, sizeof(s_msg), 0);
+            send(client_socket, s_msg, sizeof(struct status_message), 0);
             free(cor);
             free(s_msg);
             system("clear");
@@ -239,7 +239,7 @@ display_my_board(client_board);
     else { // This means it was a miss
         s_msg->response = 0;
     }
-    send(client_socket, s_msg, sizeof(s_msg), 0);
+    send(client_socket, s_msg, sizeof(struct status_message), 0);
     free(cor);
     free(s_msg);
     system("clear");

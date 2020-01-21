@@ -35,11 +35,11 @@ run:
 	./battleship
 
 clean:
+	rm *.o
+	rm *~
+	rm ./
 	rm server
 	rm client
 	rm secondarymain
 	rm battleship
 	rm nonetworking
-	rm *.o
-	rm *~
-	rm ./
